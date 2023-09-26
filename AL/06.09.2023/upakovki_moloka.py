@@ -40,3 +40,4 @@ f = open('output.txt', 'w')
 if len(str(min_cost[1])) < 4:
     min_cost[1] = str(min_cost[1])+"0"
 f.write(f"{min_cost[0]} {min_cost[1]}")
+f.close()
