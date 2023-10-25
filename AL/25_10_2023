@@ -44,11 +44,19 @@ class HelloWorld {
       }
       return rez;
   }
+  static int Max(int[] mass){
+      int max = mass[0];
+      foreach (int e in mass){
+          if (max < e) max = e;
+      }
+      return max;
+  }
 
   static void Main() {
     int[][] mass = new int[][]{
-                        new int[] {1,2,3,4, 9},
-                        new int[] {1,6,7,8,9}
+                        new int[] {1,2,3},
+                        new int[] {1,2,3,4,5},
+                        new int[] {3,4}
                         };
     int[] m1 = new int[0];
     int[] m2 = new int[0];
@@ -79,15 +87,9 @@ class HelloWorld {
   
   
   int[] m3 = new int[0];
-  foreach (int e1 in m2){
-      int flag = 1;
-      foreach (int e2 in m2){
-          if ((e1 >= e2) == false) flag = 0;
-      }
-      if (flag == 1){
-          Array.Resize(ref m3, m3.Length+1);
-          m3[m3.Length-1] = e1;
-      }
+  for (int i =0 ; i < mass.Length; i++){
+      Array.Resize(ref m3, m3.Length+1);
+      m3[i] = Max(mass[i]);
   }
   
   m2 = Delte_doubles(m2);
