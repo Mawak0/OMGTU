@@ -1,0 +1,79 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+using System;
+class HelloWorld {
+    
+  static int[] find_interval(int pos_z, int[] towns){
+      int[] interval = new int[3];
+      for (int i = 0; i < towns.Length-1; i++){
+          if ((towns[i] < pos_z) && (pos_z < towns[i+1])){
+              interval[0] = pos_z - towns[i];
+              interval[1] = towns[i+1] - pos_z;
+              interval[2] = interval[0] + interval[1];
+              //Console.WriteLine($"FIND - {interval[2]}");
+          }
+      }
+      return interval;
+  }
+  static void Main() {
+    Console.Write("K:");
+    int k = Convert.ToInt32(Console.ReadLine());
+    //int k = 5;
+    
+    int[] dists = new int[k];
+    Console.WriteLine("Расстояния:");
+    for (int i = 0; i < k-1; i++){
+        dists[i] = Convert.ToInt32(Console.ReadLine());
+    }
+    //int[] dists = new int[] {1,2,1,2};
+    Console.Write("P:");
+    //int p = 1;
+    int p = Convert.ToInt32(Console.ReadLine());
+    int sum_dists = 0;
+    foreach (int d in dists){
+        sum_dists += d;
+    }
+    int[] towns = new int[k];
+    for (int i =0 ; i < k; i++){
+        if (i == 0) towns[i] = 1;
+        else{
+            //Console.WriteLine($"i - {i}, towns[i] - {towns[i]}, towns[i-1] - {towns[i-1]}, dists[i-1] - {dists[i-1]}");
+            towns[i] = towns[i-1] + dists[i-1];
+        }
+    }
+    Console.WriteLine("Позиции городов:");
+    foreach(int i in towns){
+        Console.WriteLine(i);
+    }
+    //Console.WriteLine($"interval - {find_interval(3, towns)[2]}");
+    
+    int[] inters = new int[0];
+    for (int pos = 1; pos < towns[towns.Length-1]; pos++){
+        int[] intervals = find_interval(pos, towns);
+        int inter1 = intervals[0];
+        int inter2 = intervals[1];
+        int total_inter = intervals[2];
+        if ((inter1 >= p) && (inter2 >= p)){
+            Array.Resize(ref inters, inters.Length+1);
+            //Console.WriteLine($"position z  - {pos}");
+            inters[inters.Length-1] = total_inter;
+        }
+        
+    }
+    Console.WriteLine("----");
+    int min_inter = inters[0];
+    foreach (int e in inters){
+        if (e < min_inter){
+            min_inter = e;
+            
+        }
+    }
+    Console.WriteLine($"Ответ = {min_inter}");
+  }
+}
