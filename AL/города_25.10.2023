@@ -10,17 +10,27 @@ using System;
 class HelloWorld {
     
   static int[] find_interval(int pos_z, int[] towns){
-      int[] interval = new int[3];
+      int[] interval = new int[2];
       for (int i = 0; i < towns.Length-1; i++){
           if ((towns[i] < pos_z) && (pos_z < towns[i+1])){
               interval[0] = pos_z - towns[i];
               interval[1] = towns[i+1] - pos_z;
-              interval[2] = interval[0] + interval[1];
               //Console.WriteLine($"FIND - {interval[2]}");
           }
       }
       return interval;
   }
+  
+  static int find_total_interval(int pos_z, int[] towns){
+      int interval = 0;
+      for (int i = 0; i < towns.Length; i++){
+          interval = interval + Math.Abs(pos_z - towns[i]);
+          
+      }
+      
+      return interval;
+  }
+  
   static void Main() {
     Console.Write("K:");
     int k = Convert.ToInt32(Console.ReadLine());
@@ -58,11 +68,10 @@ class HelloWorld {
         int[] intervals = find_interval(pos, towns);
         int inter1 = intervals[0];
         int inter2 = intervals[1];
-        int total_inter = intervals[2];
         if ((inter1 >= p) && (inter2 >= p)){
             Array.Resize(ref inters, inters.Length+1);
             //Console.WriteLine($"position z  - {pos}");
-            inters[inters.Length-1] = total_inter;
+            inters[inters.Length-1] = find_total_interval(pos, towns);
         }
         
     }
