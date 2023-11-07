@@ -1,0 +1,56 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+на вход подается строка, необходитмо определить сумму четных цифр строки, определить является ли строка палиндромом.
+
+
+
+*******************************************************************************/
+using System;
+class HelloWorld {
+    static int[] Get_nums_from_string(string s){
+        string nums = "0123456789";
+        int[] rez = new int[0];
+        foreach(char c in s){
+            foreach(char n in nums){
+                if (c == n){
+                    Array.Resize(ref rez, rez.Length+1);
+                    rez[rez.Length-1] = Convert.ToInt32(Convert.ToString((c)));
+                    break;
+                }
+            }
+        }
+        return rez;
+    }
+    
+    static bool Is_palind(string s){
+        string new_s = "";
+        for (int i = 0; i < s.Length; i++){
+            if (Convert.ToString(s[i]) != " "){
+                new_s += Convert.ToString(s[i]).ToLower();
+            }
+        }
+        string rev_s = "";
+        for (int i = new_s.Length-1; i != -1; i--){
+            rev_s += new_s[i];
+        }
+        if (rev_s == new_s) return true;
+        else return false;
+    }
+    
+  static void Main() {
+    string a = Console.ReadLine();
+    int[] q = Get_nums_from_string(a);
+    int sum_chet = 0;
+    foreach (int w in q){
+        if (w % 2 == 0) sum_chet += w;
+    }
+    Console.WriteLine($"Сумма четных = {sum_chet}");
+    if (Is_palind(a)) Console.WriteLine("Строка является полиндромом");
+    else Console.WriteLine("Строка не является полиндромом");
+  }
+}
