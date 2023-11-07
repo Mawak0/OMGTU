@@ -29,6 +29,13 @@ def delete_bad_numbers(bad_numbers, money):
             out = out-1
     return out
 
+def add_bad_numbers(bad_numbers, money):
+    out = money
+    for n in bad_numbers:
+        if out >= n:
+            out = out+1
+    return out
+
 
 def cash_decompiler(multiplers, money, bad_numbers):
     low_money_out = 0
@@ -39,14 +46,28 @@ def cash_decompiler(multiplers, money, bad_numbers):
             multipler = multipler * multiplers[i-1]
     return low_money_out
 
-#print(cash_decompiler(c_i, cash_i, A_i))
+low_money_i = cash_decompiler(c_i, cash_i, A_i)
 
 def cash_compiler(multiplers, low_money, bad_numbers):
-    def get_current_multipler(multiplers, ):
+    def get_current_multipler(multiplers, pos):
+        mult = 1
+        for p in range(pos, len(multiplers)):
+            mult = mult*multiplers[pos]
+        return mult
 
     out_slots = []
-    for i in range(0, len(multiplers))
+    for i in range(0, len(multiplers)+1):
+        if i != len(multiplers)+1:
+            app = low_money // get_current_multipler(multiplers, i)
+            low_money = low_money - app * get_current_multipler(multiplers, i)
+        else:
+            app = low_money
+        out_slots.append(app)
 
+    for i in range(0, len(out_slots)):
+        out_slots[i] = add_bad_numbers(bad_numbers, out_slots[i])
+    return out_slots
 
-
+rez = cash_compiler(c_k, low_money_i, A_k)
+print(str(rez)[1:-1].replace(",", " "))
 
