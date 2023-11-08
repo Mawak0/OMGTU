@@ -1,0 +1,54 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+using System;
+class HelloWorld {
+    
+  static int[,] Mass_filling(int n, int m){
+      int[,] rez = new int[n,m];
+      for (int i = 0; i < n; i++){
+          Console.WriteLine($"Элементы {i} строки: ");
+          for (int j = 0; j < m; j++){
+              rez[i,j] = Convert.ToInt32(Console.ReadLine());
+          }
+      }
+      return rez;
+  }
+  
+  static int Find_max_in_line(int[,] nums, int m, int line_n){
+      int max = nums[line_n,0];
+      for (int i = 0; i < m; i++){
+          if (max < nums[line_n, i]) max = nums[line_n, i];
+      }
+      return max;
+  }
+  static int Find_min_in_line(int[,] nums, int m, int line_n){
+      int min = nums[line_n,0];
+      for (int i = 0; i < m; i++){
+          if (min > nums[line_n, i]) min = nums[line_n, i];
+      }
+      return min;
+  }
+  static void Main() {
+    Console.Write("Введите количество строк: ");
+    int n = Convert.ToInt32(Console.ReadLine());
+    Console.Write("Введите количество столбцов: ");
+    int m = Convert.ToInt32(Console.ReadLine());
+    int[,] mass = Mass_filling(n,m);
+    int count = 0;
+    for (int i = 0; i < n; i++){
+        int max = Find_max_in_line(mass, m, i);
+        int min = Find_min_in_line(mass, m, i);
+        if ((max % 2 ==0) && (min % 2 == 0)){
+            count++;
+        }
+    }
+    Console.WriteLine($"Количество строк в которых минимальный и максимальный четные - {count}");
+    
+  }
+}
