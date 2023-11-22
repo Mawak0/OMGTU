@@ -1,0 +1,162 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+// 0 = dead mouse
+// 1 = black mouse
+// 2 = white mouse
+// mass = [state, number]
+
+
+
+//на вход подается кол во серых мышей
+//кол во белых мышей
+//это изначально какое кол во мышей было
+//рассажены по кругу
+//подается какую мышь сьедаем
+//и количество серых мышей которые должно остаться
+//кол во белых мышей которое должно остаться
+//необходимо определить как бедет рассажены мышки
+//чтобы при выходе только с позиции серой мышки при сьедании каждой катой
+//с входными данными получились выходные
+//(первая мышь сначала не сьедается)
+
+
+using System;
+class HelloWorld
+{
+
+    static bool need_stop(int[][] mass, int need_alive)
+    {
+        int count = 0;
+        int n = mass.Length;
+        for (int i = 0; i < n; i++)
+        {
+            if (mass[i][0] != 0)
+            {
+                count++;
+            }
+        }
+        if (count == need_alive) return true;
+        else return false;
+    }
+    static void Main()
+    {
+        Console.WriteLine("Введите количество белых мышей");
+        int white_n = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Введите количество серых мышей");
+        int black_n = Convert.ToInt32(Console.ReadLine());
+        int n = white_n + black_n;
+        Console.WriteLine("Съедать каждую k мышь, k = ");
+        int k = Convert.ToInt32(Console.ReadLine());
+
+        
+        Console.WriteLine("Введите количество белых мышей, которые должны остаться");
+        int white_n_should_live = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Введите количество серых мышей, которые должны остаться");
+        int black_n_should_live = Convert.ToInt32(Console.ReadLine());
+        
+
+        int first_eat = 0;
+        int[][] mass = new int[n][];
+        for (int i = 0; i < n; i++) mass[i] = new int[2];
+        for (int i = 0; i < n; i++)
+        {
+            if (false)
+            {
+                mass[i][0] = 2;
+                mass[i][1] = i;
+            }
+            else
+            {
+                mass[i][0] = 1;
+                mass[i][1] = i;
+            }
+        }
+        int delta = 0;
+        bool stay_alive = false;
+        
+
+
+        mass[first_eat][0] = 0;
+
+
+
+        for (int i = first_eat; stay_alive == false; i++)
+        {
+
+            if (i >= n)
+            {
+                i = i - n;
+            }
+
+            stay_alive = need_stop(mass, white_n_should_live+black_n_should_live);
+            if ((mass[i][0] != 0) && (delta != k))
+            {
+                delta++;
+            }
+            if (delta == k)
+            {
+                if (stay_alive == true) break;
+                if (mass[i][0] != 0)
+                {
+                    mass[i][0] = 0;
+                }
+                delta = 0;
+            }
+        }
+        
+        
+        
+        int[] good_pos = new int[n];
+
+        int free_white = white_n - white_n_should_live;
+        int free_black = black_n - black_n_should_live;
+
+        
+        for (int i = 0; i < n; i++)
+        {
+            if (i == 0){
+                good_pos[i] = 1;
+                black_n_should_live = black_n_should_live - 1;
+            }
+            //Console.WriteLine($"{i}, состояние {mass[i][0]}");
+            else{
+                if (mass[i][0] != 0){
+                    if (black_n_should_live != 0){
+                        good_pos[i] = 1;
+                        black_n_should_live = black_n_should_live - 1;
+                    }
+                    else if (white_n_should_live != 0){
+                        good_pos[i] = 2;
+                        white_n_should_live = white_n_should_live - 1;
+                    }
+                }
+                if (mass[i][0] == 0){
+                    if (free_black != 0){
+                        good_pos[i] = 1;
+                        free_black = free_black - 1;
+                    }
+                    else if (free_white != 0){
+                        good_pos[i] = 2;
+                        free_white = free_white - 1;
+                    }
+                }
+                
+            }
+            Console.WriteLine($"{mass[i][0]}, good pos {good_pos[i]}"); 
+        }
+    
+        for (int  i =0;  i < n; i++){
+            string c = "";
+            if (good_pos[i] == 1) c = "black";
+            else c = "white";
+            Console.WriteLine($"pos {i} {c} {good_pos[i]}");
+        }
+        
+    }
+}
