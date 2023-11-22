@@ -1,0 +1,104 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+using System;
+
+class Student {
+    string name;
+    int birth_date;
+    string group;
+    
+    public Student(){
+        this.name = "NoName";
+        this.birth_date = -1;
+        this.group = "NoGroup";
+    }
+    
+    public Student(string Sname, int Sbirth_date, string Sgroup){
+        this.name = Sname;
+        this.birth_date = Sbirth_date;
+        this.group = Sgroup;
+    }
+    public string Name{
+        get {return this.name;}
+        set {this.name = value;}
+    }
+    public int Birth{
+        get {return this.birth_date;}
+        set {this.birth_date = value;}
+    }
+    public string Group{
+        get {return this.group;}
+        set {this.group = value;}
+    }
+    public bool GroupCheck(string need_group){
+        if (need_group == this.group){
+            return true;
+        }
+        else return false;
+    }
+    public bool BirthCheck(int need_date){
+        if (need_date == this.birth_date){
+            return true;
+        }
+        else return false;
+    }
+    
+}
+
+class HelloWorld {
+  static void Main() {
+    Console.Write("Количество студентов: ");
+    int n = Convert.ToInt32(Console.ReadLine());
+    Student[] mass = new Student[n];
+
+    for (int i = 0; i< n; i++){
+        Console.WriteLine($"Задать параметры студента {i+1}? y/n");
+        string ch = Console.ReadLine();
+        if (ch == "y"){
+            Console.Write("Имя студента: ");
+            string new_name = Console.ReadLine();
+            Console.Write("Год рождения студента: ");
+            int new_date = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Название группы студента: ");
+            string new_group = Console.ReadLine();
+            mass[i] = new Student(new_name, new_date, new_group);
+            Console.WriteLine("Студент создан");
+        }
+        else{
+            mass[i] = new Student();
+            Console.WriteLine("Создан студент со стандартными параметрами");
+        }
+    }
+    
+    Console.WriteLine("Выборка студентов по году рождения, введите год");
+    int need_date = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine($"Следующие студенты родились в {need_date}");
+    Console.WriteLine("-----Начало списка-------");
+    for (int i = 0; i < n; i++){
+        if (mass[i].BirthCheck(need_date) == true){
+            Console.WriteLine($"Студент {i+1}, {mass[i].Name}, {mass[i].Birth}, {mass[i].Group}");
+        }
+    }
+    Console.WriteLine("-----Конец списка-------");
+    
+    Console.WriteLine("Выборка студентов по группе, введите название группы");
+    string need_group = Console.ReadLine();
+    Console.WriteLine($"Следующие студенты принадлежат группе {need_group}");
+    Console.WriteLine("-----Начало списка-------");
+    for (int i = 0; i < n; i++){
+        if (mass[i].GroupCheck(need_group) == true){
+            Console.WriteLine($"Студент {i+1}, {mass[i].Name}, {mass[i].Birth}, {mass[i].Group}");
+        }
+    }
+    Console.WriteLine("-----Конец списка-------");
+
+
+    
+  }
+}
