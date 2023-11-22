@@ -32,11 +32,11 @@ class HelloWorld
     }
     static void Main()
     {
-        Console.WriteLine("Ââåäèòå êîëè÷åñòâî ìûøåé");
+        Console.WriteLine("Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¼Ñ‹ÑˆÐµÐ¹");
         int n = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("Ñúåäàòü êàæäóþ k ìûøü, k = ");
+        Console.WriteLine("Ð¡ÑŠÐµÐ´Ð°Ñ‚ÑŒ ÐºÐ°Ð¶Ð´ÑƒÑŽ k Ð¼Ñ‹ÑˆÑŒ, k = ");
         int k = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("Íîìåð áåëîé ìûøè");
+        Console.WriteLine("ÐÐ¾Ð¼ÐµÑ€ Ð±ÐµÐ»Ð¾Ð¹ Ð¼Ñ‹ÑˆÐ¸");
         int white_mouse_pos = Convert.ToInt32(Console.ReadLine()) - 1;
         int first_eat = 0;
         int[][] mass = new int[n][];
@@ -89,6 +89,6 @@ class HelloWorld
         if (live_mouse_pos > white_mouse_pos) need_first_eat = -Math.Abs(live_mouse_pos - white_mouse_pos);
         if (live_mouse_pos < white_mouse_pos) need_first_eat = Math.Abs(live_mouse_pos - white_mouse_pos);
         if (need_first_eat < 0) need_first_eat = (n + 1) + need_first_eat;
-        Console.WriteLine($"Ïåðâîé äîëæíà áûòü ñúåäåíà ìûøü ïîä íîìåðîì = {need_first_eat}");
+        Console.WriteLine($"ÐŸÐµÑ€Ð²Ð¾Ð¹ Ð´Ð¾Ð»Ð¶Ð½Ð° Ð±Ñ‹Ñ‚ÑŒ ÑÑŠÐµÐ´ÐµÐ½Ð° Ð¼Ñ‹ÑˆÑŒ Ð¿Ð¾Ð´ Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð¼ = {need_first_eat}");
     }
 }
