@@ -1,0 +1,126 @@
+using System;
+
+
+class Car{
+    public string model_name;
+    public int year;
+    public string color;
+    public string[] owners;
+    public int[] service_years;
+    public Car(string model_name, int year, string color, string[] owners, int[] service_years) {
+        this.model_name = model_name;
+        this.year = year;
+        this.color = color;
+        this.owners = new string[owners.Length];
+        this.service_years = new int[service_years.Length];
+        Array.Copy(owners, this.owners, owners.Length);
+        Array.Copy(service_years, this.service_years, service_years.Length);
+    }
+    public bool service_year_check(int year_need) {
+        for (int q = 0; q < service_years.Length; q++) {
+            if (service_years[q] == year_need) return true;
+        }
+        return false;
+    }
+    public string last_owner{
+        get { return owners[owners.Length - 1]; }
+    }
+
+}
+
+class HelloWorld
+{
+
+    static void Main()
+    {
+
+        Console.WriteLine("Введите количество машин");
+        int car_count = Convert.ToInt32(Console.ReadLine());
+        Car[] cars = new Car[car_count];
+        for (int i = 0; i < car_count; i++) {
+            Console.WriteLine($"Добавление машины номер {i+1}");
+            Console.WriteLine("---------------------");
+            Console.Write("Наименование машины: ");
+            string car_name = Console.ReadLine();
+            Console.Write("Год выпуска: ");
+            int year = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Цвет машины: ");
+            string color = Console.ReadLine();
+            Console.Write("Количество владельцев: ");
+            int owners_count = Convert.ToInt32(Console.ReadLine());
+            string[] owners = new string[owners_count];
+            for (int o = 0; o < owners_count; o++) {
+                Console.Write($"{o+1} владелец: ");
+                owners[o] = Console.ReadLine();
+            }
+
+            Console.Write("Количество дат прохождения техосмотра: ");
+            int years_count = Convert.ToInt32(Console.ReadLine());
+            int[] service_years = new int[years_count];
+            for (int o = 0; o < years_count; o++)
+            {
+                Console.Write($"{o + 1} прохождение техосмотра(год): ");
+                service_years[o] = Convert.ToInt32(Console.ReadLine());
+            }
+            cars[i] = new Car(car_name, year, color, owners, service_years);
+            Console.WriteLine("---------------");
+            Console.WriteLine($"Машина {i+1} добавлена");
+        }
+
+        Console.WriteLine("----------------------------------");
+        Console.WriteLine("Выборка машин, произведенных в заданный год");
+        Console.Write("Введите год: ");
+        int need_year = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Найдены следующие машины:");
+        Console.WriteLine("--------------------------");
+        for (int i = 0; i < car_count; i++) {
+            if (cars[i].year == need_year) {
+                Console.WriteLine($"{cars[i].model_name} {cars[i].year} года выпуска, цвет: {cars[i].color}");
+                Console.WriteLine("Список владельцев: ");
+                for (int o = 0; o < cars[i].owners.Length; o++) {
+                    Console.WriteLine(cars[i].owners[o]);
+                }
+                Console.WriteLine("Список дат прохождения техосмотра: ");
+                for (int o = 0; o < cars[i].service_years.Length; o++)
+                {
+                    Console.WriteLine(cars[i].service_years[o]);
+                }
+
+
+            }
+        }
+        Console.WriteLine("----------------------------------");
+        Console.WriteLine("Выборка машин, которые прошли техосмотр в заданный год");
+        Console.Write("Введите год: ");
+        int need_service_year = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Найдены следующие машины:");
+        Console.WriteLine("--------------------------");
+        for (int i = 0; i < car_count; i++)
+        {
+            if (cars[i].service_year_check(need_year))
+            {
+                Console.WriteLine($"{cars[i].model_name} {cars[i].year} года выпуска, цвет: {cars[i].color}");
+                Console.WriteLine("Список владельцев: ");
+                for (int o = 0; o < cars[i].owners.Length; o++)
+                {
+                    Console.WriteLine(cars[i].owners[o]);
+                }
+                Console.WriteLine("Список дат прохождения техосмотра: ");
+                for (int o = 0; o < cars[i].service_years.Length; o++)
+                {
+                    Console.WriteLine(cars[i].service_years[o]);
+                }
+
+
+            }
+        }
+
+        Console.WriteLine("Последние владельцы каждой машины: ");
+        for (int i = 0; i < car_count; i++) {
+            Console.WriteLine($"Машина {i+1} - {cars[i].last_owner}");
+        }
+
+    }
+
+    
+}
