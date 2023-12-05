@@ -23,7 +23,10 @@ class Car{
         return false;
     }
     public string last_owner{
-        get { return owners[owners.Length - 1]; }
+        get {
+            if (owners.Length == 0) { return "Null"; }
+            return owners[owners.Length - 1]; 
+        }
     }
 
 }
@@ -97,7 +100,7 @@ class HelloWorld
         Console.WriteLine("--------------------------");
         for (int i = 0; i < car_count; i++)
         {
-            if (cars[i].service_year_check(need_year))
+            if (cars[i].service_year_check(need_year) == true)
             {
                 Console.WriteLine($"{cars[i].model_name} {cars[i].year} года выпуска, цвет: {cars[i].color}");
                 Console.WriteLine("Список владельцев: ");
