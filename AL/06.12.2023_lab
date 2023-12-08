@@ -87,7 +87,7 @@ class HelloWorld {
             Console.WriteLine("Даты прохождения техосмотра: ");
             for (int t = 0; t < service.Length; t++) { Console.Write($", {service[t]}"); }
         }
-        Console.WriteLine("--------------------");
+        Console.WriteLine("\n--------------------");
     }
 
 
