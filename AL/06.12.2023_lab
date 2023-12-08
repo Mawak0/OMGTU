@@ -1,0 +1,172 @@
+using System;
+using System.Net.Http.Headers;
+using System.Reflection.Metadata.Ecma335;
+
+class Cars {
+    string num;
+    string name;
+    int year;
+    int[] service_years;
+    public Cars(string num, string name, int year, int[] service_years) {
+        this.num = num;
+        this.name = name;
+        this.year = year;
+        this.service_years = new int[service_years.Length];
+        Array.Copy(service_years, this.service_years, service_years.Length);
+    }
+    public string Num {get { return num; }}
+    public string Name { get { return name; } }
+    public int Year { get { return year; } }
+    public int[] ServiceYears { get { return service_years; } }
+}
+
+class PassengerCar : Cars {
+    string body_type;
+    string engine_power;
+    public PassengerCar(string num, string name, int year, int[] service_years, string body_type, string engine_power)
+        : base(num, name, year, service_years) {
+        this.body_type = body_type;
+        this.engine_power = engine_power;
+
+    }
+    public string BodyType {
+        get { return body_type; }
+    }
+    public string EnginePower
+    {
+        get { return body_type; }
+    }
+}
+
+class CargoCar : Cars {
+    int carrying;
+    public CargoCar(string num, string name, int year, int[] service_years, int carrying) : base(num, name, year, service_years) {
+        this.carrying = carrying;
+    
+    }
+    public int Carrying {
+        get { return carrying; }
+    }
+}
+
+class HelloWorld {
+
+
+    static bool Contains(int[] m, int num) {
+        foreach (int q in m) {
+            if (q == num) { return true; }
+        }
+        return false;
+    }   
+
+    static void SayMachineInfoPassenger(PassengerCar car) {
+        Console.WriteLine("--------------------");
+        Console.WriteLine($"{car.Name} {car.Year} года выпуска");
+        Console.WriteLine($"Номер автомобиля - {car.Num}");
+        Console.WriteLine($"Тип кузова - {car.BodyType}");
+        Console.WriteLine($"Мощность двигателя - {car.EnginePower}");
+        if (car.ServiceYears.Length == 0) { Console.WriteLine("Нет дат прохождения техосмотра"); }
+        else {
+            int[] service = car.ServiceYears;
+            Console.WriteLine("Даты прохождения техосмотра: ");
+            for (int t = 0; t < service.Length; t++) { Console.Write($"{service[t]}, "); }
+        }
+        Console.WriteLine("\n--------------------");
+    }
+
+    static void SayMachineInfoCargo(CargoCar car)
+    {
+        Console.WriteLine("--------------------");
+        Console.WriteLine($"{car.Name} {car.Year} года выпуска");
+        Console.WriteLine($"Номер автомобиля - {car.Num}");
+        Console.WriteLine($"Грузоподъемность - {car.Carrying}");
+        if (car.ServiceYears.Length == 0) { Console.WriteLine("Нет дат прохождения техосмотра"); }
+        else
+        {
+            int[] service = car.ServiceYears;
+            Console.WriteLine("Даты прохождения техосмотра: ");
+            for (int t = 0; t < service.Length; t++) { Console.Write($", {service[t]}"); }
+        }
+        Console.WriteLine("--------------------");
+    }
+
+
+
+    static void Main() {
+        Console.Write("Количество машин для добавления: ");
+        int cars_count = Convert.ToInt32(Console.ReadLine());
+        CargoCar[] cargo_cars = new CargoCar[0];
+        PassengerCar[] passenger_cars = new PassengerCar[0];
+        for (int i = 0; i < cars_count; i++) {
+            Console.WriteLine($"Добавление {i + 1} машины");
+            Console.Write($"Выберите тип машины (1 - легковая, 2 - грузовая): ");
+            int c = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Номер авто: ");
+            string num = Console.ReadLine();
+            Console.Write("Название авто: ");
+            string name = Console.ReadLine();
+            Console.Write("Год выпуска: ");
+            int year = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Количество дат прохождения техосмотра: ");
+            int years_count = Convert.ToInt32(Console.ReadLine());
+            int[] service_years = new int[years_count];
+            for (int o = 0; o < years_count; o++)
+            {
+                Console.Write($"{o + 1} прохождение техосмотра(год): ");
+                service_years[o] = Convert.ToInt32(Console.ReadLine());
+            }
+
+            if (c == 1)
+            {
+                Console.Write("Тип кузова: ");
+                string body_type = Console.ReadLine();
+                Console.Write("Мощность двигателя: ");
+                string engine_power = Console.ReadLine();
+                Array.Resize(ref passenger_cars, passenger_cars.Length + 1);
+                passenger_cars[passenger_cars.Length-1] = new PassengerCar(num, name, year, service_years, body_type, engine_power);
+            }
+
+            else if (c == 2) {
+                Console.Write("Грузоподъемность: ");
+                int carrying = Convert.ToInt32(Console.ReadLine());
+                Array.Resize(ref cargo_cars, cargo_cars.Length + 1);
+                cargo_cars[cargo_cars.Length-1] = new CargoCar(num, name, year, service_years, carrying);
+            }
+        }
+
+        Console.WriteLine("Выборка машин по типу кузова");
+        Console.Write("Нужный тип кузова: ");
+        string need_body_type = Console.ReadLine();
+        for (int i = 0; i < passenger_cars.Length; i++) {
+            if (passenger_cars[i].BodyType == need_body_type) {
+                SayMachineInfoPassenger(passenger_cars[i]);
+            }
+        }
+
+        Console.WriteLine("\n\n\nОпределение лучшего способа доставки груза (наименьшим количеством машин)");
+        Console.Write("Количесво груза: ");
+        int load = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("\n\n\nМашины, которые должны быть отправлены на перевозку:");
+        int[] used_cars = new int[0];
+        while (load > 0)
+        {
+            int min_carrying = 0;
+            for (int i = 0; i < cargo_cars.Length; i++)
+            {
+                if ((cargo_cars[i].Carrying > min_carrying) && (Contains(used_cars, i)) == false) {
+                    min_carrying = cargo_cars[i].Carrying;
+                    
+                }
+            }
+            for (int i = 0; i < cargo_cars.Length; i++) {
+                if ((min_carrying == cargo_cars[i].Carrying) && (Contains(used_cars, i) == false)) {
+                    Array.Resize(ref used_cars, used_cars.Length + 1);
+                    used_cars[used_cars.Length - 1] = i;
+                    load = load - cargo_cars[i].Carrying;
+                    SayMachineInfoCargo(cargo_cars[i]);
+                }
+            }
+        }
+    }
+}
