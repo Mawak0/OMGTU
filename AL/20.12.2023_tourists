@@ -29,6 +29,7 @@ using System;
 class HelloWorld{
     static bool CanReachPoint(double pos, double point_pos, double time, double suntime, double speed){
         double have_time = suntime - time;
+        Console.WriteLine($"{pos} {point_pos}, {time}, {suntime}, {speed}, {have_time}");
         if (have_time < (point_pos-pos)/speed){
             return false;
         }
@@ -40,22 +41,23 @@ class HelloWorld{
     double way_dist = Convert.ToDouble(Console.ReadLine());
     Console.Write("Количество пунктов: ");
     int points_count = Convert.ToInt32(Console.ReadLine());
-    double[] dists_to_points = new double[points_count];
+    double[] dists_to_points = new double[points_count+1];
     for (int i = 0; i < points_count; i++){
         Console.Write($"Расстояние до пункта {i+1}: ");
-        dists_to_points[i] = Convert.ToInt32(Console.ReadLine());
+        dists_to_points[i] = Convert.ToDouble(Console.ReadLine());
     }
+    dists_to_points[dists_to_points.Length-1] = way_dist;
     Console.Write("Средняя скорость группы: ");
     double speed = Convert.ToDouble(Console.ReadLine());
     Console.Write("Время восхода (часы): ");
-    int sunrise_hours = Convert.ToInt32(Console.ReadLine());
+    double sunrise_hours = Convert.ToDouble(Console.ReadLine());
     Console.Write("Время восхода (минуты): ");
-    int sunrise_min = Convert.ToInt32(Console.ReadLine());
+    double sunrise_min = Convert.ToDouble(Console.ReadLine());
     double sunrise_time = sunrise_hours+(sunrise_min / 60);
     Console.Write("Время захода (часы): ");
-    int sunset_hours = Convert.ToInt32(Console.ReadLine());
+    double sunset_hours = Convert.ToDouble(Console.ReadLine());
     Console.Write("Время захода (минуты): ");
-    int sunset_min = Convert.ToInt32(Console.ReadLine());
+    double sunset_min = Convert.ToDouble(Console.ReadLine());
     double sunset_time = sunset_hours+(sunset_min / 60);
     double sun_time = sunset_time - sunrise_time;
     
@@ -64,8 +66,7 @@ class HelloWorld{
     double time_in_way = 0;
     double pos = 0;
     double time_in_way_today = 0;
-    for (int p = 0; p < points_count; p++){
-
+    for (int p = 0; p < points_count+1; p++){
         if (CanReachPoint(pos, dists_to_points[p], time_in_way_today, sun_time, speed)){
             time_in_way_today  = time_in_way_today + ((dists_to_points[p]-pos)/speed);
             pos = dists_to_points[p];
@@ -73,15 +74,15 @@ class HelloWorld{
         else{
             Array.Resize(ref relax_points, relax_points.Length+1);
             relax_points[relax_points.Length-1] = p-1;
-            time_in_way = time_in_way + sun_time;
+            time_in_way = time_in_way + 24;
             pos = dists_to_points[p-1];
             time_in_way_today = 0;
         }
     }
-    time_in_way = time_in_way + (way_dist-dists_to_points[dists_to_points.Length-1])/speed;
+    time_in_way = time_in_way + (dists_to_points[dists_to_points.Length-1] - dists_to_points[dists_to_points.Length-2])/speed;
     Console.Write("Точки, посещенные туристами: ");
     for (int i =0 ; i < relax_points.Length; i++){
-        Console.Write($", {relax_points[i]} ");
+        Console.Write($", {relax_points[i]+1} ");
     }
     Console.WriteLine($"Количество дней в пути: {time_in_way / 24} дней ({time_in_way} часов)");
     
