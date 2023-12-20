@@ -1,0 +1,114 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+класс товар
+где будет наименование, единица измерения, стоимость
+класс наследник 1 - продукты
+срок годности (в днях), калории, белки, жиры, углеводы
+класс неаследник 2 - стройматериалы
+вид материала
+
+для детей реализовать след функции
+вывод всей информации(метод)
+
+в мэйне два массива для двух наследников
+
+*******************************************************************************/
+using System;
+
+
+
+class Tovar{
+    public string name;
+    public string ed_izm;
+    public int cost;
+    public Tovar(string name, string ed_izm, int cost){
+        this.name = name;
+        this.ed_izm = ed_izm;
+        this.cost = cost;
+    }
+    
+}
+
+class Product : Tovar{
+    int expiration;
+    int calories;
+    int belki;
+    int fats;
+    int uglevod;
+    public Product(string name, string ed_izm, int cost, int expiration, int calories, int belki, int fats, int uglevod) : base(name, ed_izm, cost){
+        this.expiration = expiration;
+        this.calories = calories;
+        this.belki = belki;
+        this.fats = fats;
+        this.uglevod = uglevod;
+    }
+    public void ShowInfo(){
+        Console.WriteLine($"Продукт - {this.name}, Ед. Измерения - {this.ed_izm}, цена - {this.cost}");
+        Console.WriteLine($"Калории - {this.calories}, Белки - {this.belki}, Жиры - {this.fats}, Углеводы - {this.uglevod}, Срок годности - {this.expiration} дней");
+    }
+} 
+
+class Build_material : Tovar{
+    string material_name;
+    public Build_material(string name, string ed_izm, int cost, string material_name) : base(name, ed_izm, cost){
+        this.material_name = material_name;
+    }
+    public void ShowInfo(){
+        Console.WriteLine($"Строительный материал - {this.name}, Ед. Измерения - {this.ed_izm}, цена - {this.cost}");
+        Console.WriteLine($"Вид материала - {this.material_name}");
+    }
+}
+
+class HelloWorld {
+  static void Main() {
+    Product[] products = new Product[0];
+    Build_material[] materials = new Build_material[0];
+    Console.Write("Количество товаров: ");
+    int total_count = Convert.ToInt32(Console.ReadLine());
+    for (int i = 0; i < total_count; i++){
+        Console.WriteLine($"Добавление товара номер {i+1}");
+        int c;
+        Console.Write("Вид товара (1 - продукт, 2 - строительный материал): ");
+        c = Convert.ToInt32(Console.ReadLine());
+        Console.Write("Наименование товара: ");
+        string name = Console.ReadLine();
+        Console.Write("Единица измерения товара: ");
+        string ed_izm = Console.ReadLine();
+        Console.WriteLine("Цена товара: ");
+        int cost = Convert.ToInt32(Console.ReadLine());
+        if (c == 1){
+            Console.Write("Срок годности (дней): ");
+            int expiration = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Калории: ");
+            int calories = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Белки: ");
+            int belki = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Жиры: ");
+            int fats = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Углеводы: ");
+            int uglevod = Convert.ToInt32(Console.ReadLine());
+            Array.Resize(ref products, products.Length+1);
+            products[products.Length-1] = new Product(name, ed_izm, cost, expiration, calories, belki, fats, uglevod);
+        }
+        if (c == 2){
+            Console.Write("Название материала: ");
+            string material_name = Console.ReadLine();
+            Array.Resize(ref materials, materials.Length+1);
+            materials[materials.Length-1] = new Build_material(name, ed_izm, cost, material_name);
+        }
+    }
+    Console.WriteLine("Все товары добавлены");
+    Console.WriteLine("Вывод информации о продуктах");
+    for (int i = 0; i < products.Length; i++){
+        products[i].ShowInfo();
+    }
+    Console.WriteLine("Вывод информации о строительных материалах");
+    for (int i = 0; i < materials.Length; i++){
+        materials[i].ShowInfo();
+    }
+  }
+}
