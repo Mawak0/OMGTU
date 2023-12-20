@@ -1,0 +1,48 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+точка выхода туристской группы
+и точка окончания пути
+между точками определенное расстояние
+между точками расположены пункты отдыха
+необходимо определть какие пункты посетит группа и какое количество дней будет пройден путь от начала до конца
+на вход 
+длина пути
+кол-во пунктов
+расстояние от начала до каждого пункта
+средняя скорость группы
+время восхода(формат часы минуты)
+впемя захода (формат часы минуты)
+
+группа выходит с восходом солнца
+остановка производлится в том пункте после которого туристы не успевают дойти до следующегно так-как солнце село
+
+выход
+какие пункты посетят туристы
+ккакое кол во дней им необходимо для прохождения заданного расстояния
+*******************************************************************************/
+using System;
+class HelloWorld {
+  static void Main() {
+    Console.Write("Длина пути: ");
+    int way_dist = Convert.ToInt32(Console.ReadLine());
+    Console.Write("Количество пунктов: ");
+    int points_count = Convert.ToInt32(Console.ReadLine());
+    int[] dists_to_points = new int[points_count];
+    for (int i = 0; i < points_count; i++){
+        Console.Write($"Расстояние до пункта {i+1}");
+        dists_to_points[i] = Convert.ToInt32(Console.ReadLine());
+    }
+    Console.Write("Средняя скорость группы: ");
+    int speed = Convert.ToInt32(Console.ReadLine());
+    Console.Write("Время восхода (часы): ");
+    int sunrise_hours = Convert.ToInt32(Console.ReadLine());
+    Console.Write("Время восхода (минуты): ");
+    int sunrise_min = Convert.ToInt32(Console.ReadLine());
+    
+  }
+}
