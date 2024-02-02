@@ -1,0 +1,106 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+класс один
+описывает аудиторный фонд института
+характеристики аудитории:
+кол во посадочных мест
+оснащенность проектором
+оснащенность компьютерами(кол-во)
+корпус
+этаж
+номер на этаже
+
+выборки
+1)выбрать которые имеют кол во посадочных мест больше либо равно заданному
+2) выбрать аудитории с наличием компьютеров в заданном кол-ве
+3) ВЫБОРКА аудиторий с наличием компьютеров нв звдвнном этаже
+4) ВЫБОРКА АУДИТОРИЙ в заданеном корпусе на заданном этаже с заданным кол-вом посадочных мест
+
+требования:
+реализован класс меню(еще один класс)
+в котором необходимо реализовать вывод меню на экран
+меню:
+создание(базы аудиторного фонда)
+дополнение(базы)
+несколько пунктов по выборке
+пункт по изменению данных для заданной аудитории
+вывод всех данных
+выход
+*******************************************************************************/
+using System;
+
+class Classroom{
+    int seats_count;
+    bool projector;
+    int computers_count;
+    int building;
+    int floor;
+    int number_in_floor;
+    public void Classroom(int seats_count, bool projector, int computers_count, int building, int floor, int number_in_floor){
+        this.seats_count = seats_count;
+        this.projector = projector;
+        this.computers_count = computers_count;
+        this.building = building;
+        this.floor = floor;
+        this.number_in_floor = number_in_floor;
+    }
+    public int Seats_count(){
+        get {return this.seats_count};
+        set {this.seats_count = value};
+    }
+    public bool Projector(){
+        get {return this.projector};
+        set {this.projector = value};
+    }
+    public int Computers_count(){
+        get {return this.computers_count};
+        set {this.computers_count = value};
+    }
+    public int Building(){
+        get {return this.building};
+        set {this.building = value};
+    }
+    public int Floor(){
+        get {return this.floor};
+        set {this.floor = value};
+    }
+    public int Number_in_floor(){
+        get {return this.number_in_floor};
+        set {this.number_in_floor = value};
+    }
+}
+
+class Menu{
+    public int Main_menu(){
+        Console.WriteLine("Меню: \n1)Создание базы аудиторного фонда\n2)Дополнение базы\n3)Выбрать аудитории, которые имеют кол-во посадочных мест большее либо равное заданному\n4)Выбрать аудитории с наличием компьютеров в заданном кол-ве\n5)Выбрать аудитории с наличием компьютеров нв заданном этаже\n6)Выбрать аудитории в заданном корпусе, на заданном этаже, с заданным кол-вом посадочных мест\n7)Изменение данных для заданной аудитории\n8)Вывод всей информации\n9)Выход\n>");
+        int choice = Convert.ToInt32(Console.ReadLine());
+        return choice;
+    }
+    public Dictionary<int, bool, int, int, int, int>[] Create_base_menu(){
+        int length = 0;
+        Console.Write("Введите количество создаваемых аудиторий: ");
+        length = Convert.ToInt32(Console.ReadLine());
+        Dictionary<int, bool, int, int, int, int>[] classrooms_data = new Dictionary<int, bool, int, int, int, int>[length];
+        for (int i = 0; i<length; i++){
+            Consoile.Write("");
+        }
+    }
+}
+
+class HelloWorld {
+    static void Main() {
+    int choice = 0;
+    while (choice != 9){
+        Menu menu = new Menu();
+        choice = menu.Main_menu();
+        if (choice == 1){
+            
+        }
+    }
+  }
+}
