@@ -39,44 +39,43 @@ class Classroom{
     int computers_count;
     int building;
     string floor_and_number;
-    public void Classroom(int seats_count, bool projector, int computers_count, int building, int floor,  int number_in_floor){
+    public Classroom(int seats_count, bool projector, int computers_count, int building, int floor,  int number_in_floor){
         this.seats_count = seats_count;
         this.projector = projector;
         this.computers_count = computers_count;
         this.building = building;
-        this.floor = floor;
         this.floor_and_number = Convert.ToString(floor)+"-"+Convert.ToString(number_in_floor);
     }
-    public int Seats_count(){
+    public int Seats_count{
         get {return this.seats_count;}
         set {this.seats_count = value;}
     }
-    public bool Projector(){
+    public bool Projector{
         get {return this.projector;}
         set {this.projector = value;}
     }
-    public int Computers_count(){
+    public int Computers_count{
         get {return this.computers_count;}
         set {this.computers_count = value;}
     }
-    public int Building(){
+    public int Building{
         get {return this.building;}
         set {this.building = value;}
     }
-    public int Floor(){
+    public int Floor{
         get {return Convert.ToInt32(this.floor_and_number.Split("-")[0]);}
-        set {this.floor_and_number = Convert.ToString(value)+"-"+Convert.ToString(this.Number_in_floor;}
+        set {this.floor_and_number = Convert.ToString(value)+"-"+Convert.ToString(this.Number_in_floor);}
     }
-    public int Number_in_floor(){
+    public int Number_in_floor{
         get {return Convert.ToInt32(this.floor_and_number.Split("-")[1]);}
-        set {this.number_in_floor = Convert.ToString(this.Floor)+"-"+Convert.ToString(value);}
+        set {this.floor_and_number = Convert.ToString(this.Floor)+"-"+Convert.ToString(value);}
     }
     
 }
 
 class Menu{
     public int Main_menu(){
-        Console.WriteLine("Меню: \n1)Создание базы аудиторного фонда\n2)Дополнение базы\n3)Выбрать аудитории, которые имеют кол-во посадочных мест большее либо равное заданному\n4)Выбрать аудитории с наличием компьютеров в заданном кол-ве\n5)Выбрать аудитории с наличием компьютеров нв заданном этаже\n6)Выбрать аудитории в заданном корпусе, на заданном этаже, с заданным кол-вом посадочных мест\n7)Изменение данных для заданной аудитории\n8)Вывод всей информации\n9)Выход\n>");
+        Console.Write("Меню: \n1)Создание базы аудиторного фонда\n2)Дополнение базы\n3)Выбрать аудитории, которые имеют кол-во посадочных мест большее либо равное заданному\n4)Выбрать аудитории с наличием компьютеров в заданном кол-ве\n5)Выбрать аудитории с наличием компьютеров нв заданном этаже\n6)Выбрать аудитории в заданном корпусе, на заданном этаже, с заданным кол-вом посадочных мест\n7)Изменение данных для заданной аудитории\n8)Вывод всей информации\n9)Выход\n>");
         int choice = Convert.ToInt32(Console.ReadLine());
         return choice;
     }
@@ -84,7 +83,7 @@ class Menu{
         int length = 0;
         Console.Write("Введите количество создаваемых аудиторий: ");
         length = Convert.ToInt32(Console.ReadLine());
-        Classroom[] classrooms = new Classroom[length]
+        Classroom[] classrooms = new Classroom[length];
         for (int i = 0; i<length; i++){
             Console.WriteLine($"Создание {i+1} аудитории");
             classrooms[i] = Classroom_create();
@@ -98,8 +97,8 @@ class Menu{
             int seats_count = Convert.ToInt32(Console.ReadLine());
             Console.Write("Наличие проектора (0 - отсутствует, 1 - имеется)");
             int p = Convert.ToInt32(Console.ReadLine());
-            if (p == 0) {bool projector = false;}
-            if (p == 1) {bool projector = true;}
+            bool projector = false;
+            if (p == 1) {projector = true;}
             Console.Write("Количество компьютеров: ");
             int computers_count = Convert.ToInt32(Console.ReadLine());
             Console.Write("Корпус: ");
@@ -108,22 +107,34 @@ class Menu{
             string floor_and_number = Console.ReadLine();
             int floor = Convert.ToInt32(floor_and_number.Split("-")[0]);
             int number_in_floor = Convert.ToInt32(floor_and_number.Split("-")[1]);
-            return new Classroom(seats_count, projector, computers_count, building, floor, number);
+            return new Classroom(seats_count, projector, computers_count, building, floor, number_in_floor);
+    }
+    public void Show_all_data(Classroom[] classrooms){
+        for (int i = 0; i < classrooms.Length; i++){
+            Classroom room = classrooms[i];
+            string projector_word = "Нет";
+            if (room.Projector == true) {projector_word = "Есть";}
+            Console.WriteLine($"{room.Floor}-{room.Number_in_floor} (корпус {room.Building})\nМест: {room.Seats_count}\nПроектор: {projector_word}\nКол-во компьютеров: {room.Computers_count}\n\n");
+        }
     }
 }
 
 class Program {
     static void Main() {
     int choice = 0;
+    Classroom[] classrooms = new Classroom[0];
     while (choice != 9){
         Menu menu = new Menu();
         choice = menu.Main_menu();
         if (choice == 1){
-            Classroom[] classrooms = menu.Base_Create();
+            classrooms = menu.Base_create();
         }
-        if (choice = 2){
-            Array.Resize(ref classrooms, classrooms.length+1);
-            classrooms[classrooms.length] = menu.Classroom_create();
+        if (choice == 2){
+            Array.Resize(ref classrooms, classrooms.Length+1);
+            classrooms[classrooms.Length] = menu.Classroom_create();
+        }
+        if (choice == 8){
+            menu.Show_all_data(classrooms);
         }
         
     }
