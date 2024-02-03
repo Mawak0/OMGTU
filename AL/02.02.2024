@@ -114,10 +114,19 @@ class Menu{
             Classroom room = classrooms[i];
             string projector_word = "Нет";
             if (room.Projector == true) {projector_word = "Есть";}
-            Console.WriteLine($"{room.Floor}-{room.Number_in_floor} (корпус {room.Building})\nМест: {room.Seats_count}\nПроектор: {projector_word}\nКол-во компьютеров: {room.Computers_count}\n\n");
+            Console.WriteLine($"{room.Floor}-{room.Number_in_floor} (корпус {room.Building})\nМест: {room.Seats_count}\nПроектор: {projector_word}\nКол-во компьютеров: {room.Computers_count}\nНомер в базе: {i}\n\n");
             Console.Write("Нажмите enter для продолжения...");
             Console.ReadLine();
         }
+    }
+    public Classroom[] Update_room_data(Classroom[] classrooms){
+        Console.Write("Номер аудитории в базе: ");
+        int room_num = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Введите новую информацию");
+        classrooms[room_num] = Classroom_create();
+        Console.WriteLine("Информация обновлена");
+        return classrooms;
+        
     }
 }
 
@@ -135,6 +144,10 @@ class Program {
             Array.Resize(ref classrooms, classrooms.Length+1);
             classrooms[classrooms.Length-1] = menu.Classroom_create();
         }
+        if (choice == 7){
+            classrooms = menu.Update_room_data(classrooms);
+        }
+            
         if (choice == 8){
             menu.Show_all_data(classrooms);
         }
