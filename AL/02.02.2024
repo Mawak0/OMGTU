@@ -85,7 +85,7 @@ class Menu{
         length = Convert.ToInt32(Console.ReadLine());
         Classroom[] classrooms = new Classroom[length];
         for (int i = 0; i<length; i++){
-            Console.WriteLine($"Создание {i+1} аудитории");
+            Console.WriteLine($"\nСоздание {i+1} аудитории");
             classrooms[i] = Classroom_create();
             
         }
@@ -95,7 +95,7 @@ class Menu{
     public Classroom Classroom_create(){
             Console.Write("Количество посадочных мест: ");
             int seats_count = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Наличие проектора (0 - отсутствует, 1 - имеется)");
+            Console.Write("Наличие проектора (0 - отсутствует, 1 - имеется): ");
             int p = Convert.ToInt32(Console.ReadLine());
             bool projector = false;
             if (p == 1) {projector = true;}
@@ -115,6 +115,8 @@ class Menu{
             string projector_word = "Нет";
             if (room.Projector == true) {projector_word = "Есть";}
             Console.WriteLine($"{room.Floor}-{room.Number_in_floor} (корпус {room.Building})\nМест: {room.Seats_count}\nПроектор: {projector_word}\nКол-во компьютеров: {room.Computers_count}\n\n");
+            Console.Write("Нажмите enter для продолжения...");
+            Console.ReadLine();
         }
     }
 }
@@ -131,7 +133,7 @@ class Program {
         }
         if (choice == 2){
             Array.Resize(ref classrooms, classrooms.Length+1);
-            classrooms[classrooms.Length] = menu.Classroom_create();
+            classrooms[classrooms.Length-1] = menu.Classroom_create();
         }
         if (choice == 8){
             menu.Show_all_data(classrooms);
