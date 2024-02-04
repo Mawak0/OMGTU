@@ -109,15 +109,20 @@ class Menu{
             int number_in_floor = Convert.ToInt32(floor_and_number.Split("-")[1]);
             return new Classroom(seats_count, projector, computers_count, building, floor, number_in_floor);
     }
+    
+    public void Show_room_data(Classroom room, int base_number){
+        string projector_word = "Нет";
+        if (room.Projector == true) {projector_word = "Есть";}
+        Console.WriteLine($"{room.Floor}-{room.Number_in_floor} (корпус {room.Building})\nМест: {room.Seats_count}\nПроектор: {projector_word}\nКол-во компьютеров: {room.Computers_count}\nНомер в базе: {base_number}\n\n");
+    }
+    
     public void Show_all_data(Classroom[] classrooms){
         for (int i = 0; i < classrooms.Length; i++){
             Classroom room = classrooms[i];
-            string projector_word = "Нет";
-            if (room.Projector == true) {projector_word = "Есть";}
-            Console.WriteLine($"{room.Floor}-{room.Number_in_floor} (корпус {room.Building})\nМест: {room.Seats_count}\nПроектор: {projector_word}\nКол-во компьютеров: {room.Computers_count}\nНомер в базе: {i}\n\n");
-            Console.Write("Нажмите enter для продолжения...");
-            Console.ReadLine();
+            Show_room_data(room, i);
         }
+        Console.Write("Нажмите enter для продолжения...");
+        Console.ReadLine();
     }
     public Classroom[] Update_room_data(Classroom[] classrooms){
         Console.Write("Номер аудитории в базе: ");
@@ -127,6 +132,21 @@ class Menu{
         Console.WriteLine("Информация обновлена");
         return classrooms;
         
+    }
+    
+    public void Show_classrooms_with_seats_count(Classroom[] classrooms){
+        Console.Write("Количество посадочных мест: ");
+        int need_seats_count = Convert.ToInt32(Console.ReadLine());
+        int flag = 0;
+        for (int i=0; i<classrooms.Length; i++){
+            if (classrooms[i].Seats_count >= need_seats_count){
+                flag = 1;
+                Show_room_data(classrooms[i], i);
+            }
+        }
+        if (flag == 0){Console.WriteLine("Таких аудиторий нет");}
+        Console.Write("Нажмите enter для продолжения...");
+        Console.ReadLine();
     }
 }
 
@@ -144,6 +164,11 @@ class Program {
             Array.Resize(ref classrooms, classrooms.Length+1);
             classrooms[classrooms.Length-1] = menu.Classroom_create();
         }
+        
+        if (choice == 3){
+            menu.Show_classrooms_with_seats_count(classrooms);
+        }
+        
         if (choice == 7){
             classrooms = menu.Update_room_data(classrooms);
         }
