@@ -134,10 +134,10 @@ class Menu{
                     floor_and_number = Console.ReadLine();
                     floor = Convert.ToInt32(floor_and_number.Split("-")[0]);
                     number_in_floor = Convert.ToInt32(floor_and_number.Split("-")[1]);
+                    done = true;
                 }
                 catch{
                     Console.WriteLine("Ввод некорректный, введите два числа в формате 1-123 ");
-                    done = true;
                 }
             }
             return new Classroom(seats_count, projector, computers_count, building, floor, number_in_floor);
