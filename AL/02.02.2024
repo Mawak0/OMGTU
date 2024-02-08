@@ -74,15 +74,31 @@ class Classroom{
 }
 
 class Menu{
+    
+    public int Enter_number(){
+        int number = -1;
+        bool done = false;
+        while (done != true){
+            try{
+                number = Convert.ToInt32(Console.ReadLine());
+                done = true;
+            }
+            catch{
+                Console.WriteLine("Ввод некорректный, введите число: ");
+            }
+        }
+        return number;
+    }
+    
     public int Main_menu(){
-        Console.Write("Меню: \n1)Создание базы аудиторного фонда\n2)Дополнение базы\n3)Выбрать аудитории, которые имеют кол-во посадочных мест большее либо равное заданному\n4)Выбрать аудитории с наличием компьютеров в заданном кол-ве\n5)Выбрать аудитории с наличием компьютеров нв заданном этаже\n6)Выбрать аудитории в заданном корпусе, на заданном этаже, с заданным кол-вом посадочных мест\n7)Изменение данных для заданной аудитории\n8)Вывод всей информации\n9)Выход\n>");
-        int choice = Convert.ToInt32(Console.ReadLine());
+        Console.Write("Меню: \n1)Создание базы аудиторного фонда\n2)Дополнение базы\n3)Выбрать аудитории, которые имеют кол-во посадочных мест большее либо равное заданному\n4)Выбрать аудитории с наличием компьютеров в заданном кол-ве\n5)Выбрать аудитории с наличием компьютеров на заданном этаже\n6)Выбрать аудитории в заданном корпусе, на заданном этаже, с заданным кол-вом посадочных мест\n7)Изменение данных для заданной аудитории\n8)Вывод всей информации\n9)Выход\n>");
+        int choice = Enter_number();
         return choice;
     }
     public Classroom[] Base_create(){
         int length = 0;
         Console.Write("Введите количество создаваемых аудиторий: ");
-        length = Convert.ToInt32(Console.ReadLine());
+        length = Enter_number();
         Classroom[] classrooms = new Classroom[length];
         for (int i = 0; i<length; i++){
             Console.WriteLine($"\nСоздание {i+1} аудитории");
@@ -94,19 +110,36 @@ class Menu{
     }
     public Classroom Classroom_create(){
             Console.Write("Количество посадочных мест: ");
-            int seats_count = Convert.ToInt32(Console.ReadLine());
+            int seats_count = Enter_number();
             Console.Write("Наличие проектора (0 - отсутствует, 1 - имеется): ");
-            int p = Convert.ToInt32(Console.ReadLine());
+            int p = Enter_number();
             bool projector = false;
-            if (p == 1) {projector = true;}
+            bool p_done = false;
+            while (p_done != true){
+                if (p == 1) {projector = true; p_done = true;}
+                else if (p == 0) {projector = false; p_done = true;}
+                else {Console.WriteLine("Введите 0 или 1 (0 - проектор отсутствует, 1 - проектор имеется): "); p = Enter_number();}
+            }
             Console.Write("Количество компьютеров: ");
-            int computers_count = Convert.ToInt32(Console.ReadLine());
+            int computers_count = Enter_number();
             Console.Write("Корпус: ");
-            int building = Convert.ToInt32(Console.ReadLine());
+            int building = Enter_number();
             Console.Write("Этаж и номер на этаже (1-123):");
-            string floor_and_number = Console.ReadLine();
-            int floor = Convert.ToInt32(floor_and_number.Split("-")[0]);
-            int number_in_floor = Convert.ToInt32(floor_and_number.Split("-")[1]);
+            bool done = false;
+            string floor_and_number;
+            int floor = -1;
+            int number_in_floor = -1;
+            while (done != true){
+                try{
+                    floor_and_number = Console.ReadLine();
+                    floor = Convert.ToInt32(floor_and_number.Split("-")[0]);
+                    number_in_floor = Convert.ToInt32(floor_and_number.Split("-")[1]);
+                }
+                catch{
+                    Console.WriteLine("Ввод некорректный, введите два числа в формате 1-123 ");
+                    done = true;
+                }
+            }
             return new Classroom(seats_count, projector, computers_count, building, floor, number_in_floor);
     }
     
@@ -126,7 +159,7 @@ class Menu{
     }
     public Classroom[] Update_room_data(Classroom[] classrooms){
         Console.Write("Номер аудитории в базе: ");
-        int room_num = Convert.ToInt32(Console.ReadLine());
+        int room_num = Enter_number();
         Console.WriteLine("Введите новую информацию");
         classrooms[room_num] = Classroom_create();
         Console.WriteLine("Информация обновлена");
@@ -136,10 +169,58 @@ class Menu{
     
     public void Show_classrooms_with_seats_count(Classroom[] classrooms){
         Console.Write("Количество посадочных мест: ");
-        int need_seats_count = Convert.ToInt32(Console.ReadLine());
+        int need_seats_count = Enter_number();
         int flag = 0;
         for (int i=0; i<classrooms.Length; i++){
             if (classrooms[i].Seats_count >= need_seats_count){
+                flag = 1;
+                Show_room_data(classrooms[i], i);
+            }
+        }
+        if (flag == 0){Console.WriteLine("Таких аудиторий нет");}
+        Console.Write("Нажмите enter для продолжения...");
+        Console.ReadLine();
+    }
+    
+    public void Show_classrooms_with_computers_count(Classroom[] classrooms){
+        Console.Write("Количество компьютеров: ");
+        int need_computers_count = Enter_number();
+        int flag = 0;
+        for (int i=0; i<classrooms.Length; i++){
+            if (classrooms[i].Computers_count >= need_computers_count){
+                flag = 1;
+                Show_room_data(classrooms[i], i);
+            }
+        }
+        if (flag == 0){Console.WriteLine("Таких аудиторий нет");}
+        Console.Write("Нажмите enter для продолжения...");
+        Console.ReadLine();
+    }
+    public void Show_classrooms_with_computers_on_floor(Classroom[] classrooms){
+        Console.Write("Этаж: ");
+        int need_floor = Enter_number();
+        int flag = 0;
+        for (int i=0; i<classrooms.Length; i++){
+            if ((classrooms[i].Computers_count >= 0) && (classrooms[i].Floor == need_floor)){
+                flag = 1;
+                Show_room_data(classrooms[i], i);
+            }
+        }
+        if (flag == 0){Console.WriteLine("Таких аудиторий нет");}
+        Console.Write("Нажмите enter для продолжения...");
+        Console.ReadLine();
+    }
+        
+    public void Show_classrooms_with_seats_count_on_floor_on_building(Classroom[] classrooms){
+        Console.Write("Количество посадочных мест: ");
+        int need_seats_count = Enter_number();
+        Console.Write("Корпус: ");
+        int need_building = Enter_number();
+        Console.Write("Этаж: ");
+        int need_floor = Enter_number();
+        int flag = 0;
+        for (int i=0; i<classrooms.Length; i++){
+            if ((classrooms[i].Seats_count >= need_seats_count) && (classrooms[i].Floor == need_floor) && (classrooms[i].Building == need_building)){
                 flag = 1;
                 Show_room_data(classrooms[i], i);
             }
@@ -160,6 +241,7 @@ class Program {
         if (choice == 1){
             classrooms = menu.Base_create();
         }
+        
         if (choice == 2){
             Array.Resize(ref classrooms, classrooms.Length+1);
             classrooms[classrooms.Length-1] = menu.Classroom_create();
@@ -169,6 +251,16 @@ class Program {
             menu.Show_classrooms_with_seats_count(classrooms);
         }
         
+        if (choice == 4){
+            menu.Show_classrooms_with_computers_count(classrooms);
+        }
+        
+        if (choice == 5){
+            menu.Show_classrooms_with_computers_on_floor(classrooms);
+        }
+        if (choice == 6){
+            menu.Show_classrooms_with_seats_count_on_floor_on_building(classrooms);
+        }
         if (choice == 7){
             classrooms = menu.Update_room_data(classrooms);
         }
