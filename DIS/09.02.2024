@@ -1,1 +1,44 @@
-0
+
+
+def kruskal(edges):
+    def s(i):
+        return i[2]
+    edges.sort(key=s)
+    classes =[]
+
+    points = set()
+    for e in edges:
+        points.add(e[0])
+        points.add(e[1])
+
+
+    for e in edges:
+        find = 0
+        for c in range(0, len(classes)):
+            if (e[0] in classes[c][0]) and (e[1] not in classes[c][0]):
+                classes[c][0].append(e[1])
+                classes[c][1] += e[2]
+                find = 1
+            elif (e[1] in classes[c][0]) and (e[0] not in classes[c][0]):
+                classes[c][0].append(e[0])
+                classes[c][1] += e[2]
+                find = 1
+        if find == 0:
+            classes.append([[e[0],e[1]], e[2]])
+
+        for cl in classes:
+            if len(cl[0]) == len(points):
+                print(cl)
+
+
+
+
+
+
+
+
+#edges = [[1,2, 1],[2,4, 1],[4,7, 4]] # point, point, weight
+
+edges = [[1,2,15], [1,5,14], [1,4,23],[2,3,19],[2,4,16],[2,5,15],[3,5,14],[3,6,26],[4,5,25],[4,7,23],[4,8,20],[5,6,24],[5,8,27],[5,9,18],[7,8,14],[8,9,18]]
+kruskal(edges)
+
