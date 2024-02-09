@@ -81,10 +81,12 @@ class Menu{
         while (done != true){
             try{
                 number = Convert.ToInt32(Console.ReadLine());
-                done = true;
+                if (number >= 0){
+                done = true;}
+                else {Console.WriteLine("Ввод некорректный, введите неотрицательное число: ");}
             }
             catch{
-                Console.WriteLine("Ввод некорректный, введите число: ");
+                Console.WriteLine("Ввод некорректный, введите неотрицательное число: ");
             }
         }
         return number;
@@ -132,12 +134,19 @@ class Menu{
             while (done != true){
                 try{
                     floor_and_number = Console.ReadLine();
+                    if ((floor_and_number.Split("-")[0].Length > 1) || (floor_and_number.Split("-")[0] == "0")){
+                        throw new Exception();
+                    }
+                    
                     floor = Convert.ToInt32(floor_and_number.Split("-")[0]);
                     number_in_floor = Convert.ToInt32(floor_and_number.Split("-")[1]);
+                    if ((floor_and_number.Split("-")[1].Length > 2) || (floor_and_number.Split("-")[1] == "0") || (floor_and_number.Split("-")[1] == "00")){
+                        throw new Exception();
+                    }
                     done = true;
                 }
                 catch{
-                    Console.WriteLine("Ввод некорректный, введите два числа в формате 1-123 ");
+                    Console.WriteLine("Ввод некорректный, введите два числа в формате 1-12 ([1-9]-[1-99]) ");
                 }
             }
             return new Classroom(seats_count, projector, computers_count, building, floor, number_in_floor);
