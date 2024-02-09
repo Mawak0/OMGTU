@@ -71,6 +71,27 @@ class Classroom{
         set {this.floor_and_number = Convert.ToString(this.Floor)+"-"+Convert.ToString(value);}
     }
     
+    public bool Classroom_have_seats_count(int need_seats_count){
+        if (this.Seats_count >= need_seats_count) {return true;}
+        else {return false;}
+    }
+    public bool Classroom_have_computers_count(int need_computers_count){
+        if (this.Computers_count >= need_computers_count) {return true;}
+        else {return false;}
+    }
+    public bool Classroom_with_computers_on_floor(int need_floor){
+        if (this.Floor == need_floor){return true;}
+        else {return false;}
+        
+    }
+    public bool Classroom_with_seats_count_on_floor_on_building(int need_seats_count, int need_floor, int need_building){
+        if ((this.Seats_count >= need_seats_count) && (this.Floor == need_floor) && (this.Building == need_building)){
+            return true;
+        }
+        else {return false;}
+    }
+    
+    
 }
 
 class Menu{
@@ -126,7 +147,7 @@ class Menu{
             int computers_count = Enter_number();
             Console.Write("Корпус: ");
             int building = Enter_number();
-            Console.Write("Этаж и номер на этаже (1-123):");
+            Console.Write("Этаж и номер на этаже 1-12 ([1-9]-[1-99]):");
             bool done = false;
             string floor_and_number;
             int floor = -1;
@@ -176,68 +197,6 @@ class Menu{
         
     }
     
-    public void Show_classrooms_with_seats_count(Classroom[] classrooms){
-        Console.Write("Количество посадочных мест: ");
-        int need_seats_count = Enter_number();
-        int flag = 0;
-        for (int i=0; i<classrooms.Length; i++){
-            if (classrooms[i].Seats_count >= need_seats_count){
-                flag = 1;
-                Show_room_data(classrooms[i], i);
-            }
-        }
-        if (flag == 0){Console.WriteLine("Таких аудиторий нет");}
-        Console.Write("Нажмите enter для продолжения...");
-        Console.ReadLine();
-    }
-    
-    public void Show_classrooms_with_computers_count(Classroom[] classrooms){
-        Console.Write("Количество компьютеров: ");
-        int need_computers_count = Enter_number();
-        int flag = 0;
-        for (int i=0; i<classrooms.Length; i++){
-            if (classrooms[i].Computers_count >= need_computers_count){
-                flag = 1;
-                Show_room_data(classrooms[i], i);
-            }
-        }
-        if (flag == 0){Console.WriteLine("Таких аудиторий нет");}
-        Console.Write("Нажмите enter для продолжения...");
-        Console.ReadLine();
-    }
-    public void Show_classrooms_with_computers_on_floor(Classroom[] classrooms){
-        Console.Write("Этаж: ");
-        int need_floor = Enter_number();
-        int flag = 0;
-        for (int i=0; i<classrooms.Length; i++){
-            if ((classrooms[i].Computers_count >= 0) && (classrooms[i].Floor == need_floor)){
-                flag = 1;
-                Show_room_data(classrooms[i], i);
-            }
-        }
-        if (flag == 0){Console.WriteLine("Таких аудиторий нет");}
-        Console.Write("Нажмите enter для продолжения...");
-        Console.ReadLine();
-    }
-        
-    public void Show_classrooms_with_seats_count_on_floor_on_building(Classroom[] classrooms){
-        Console.Write("Количество посадочных мест: ");
-        int need_seats_count = Enter_number();
-        Console.Write("Корпус: ");
-        int need_building = Enter_number();
-        Console.Write("Этаж: ");
-        int need_floor = Enter_number();
-        int flag = 0;
-        for (int i=0; i<classrooms.Length; i++){
-            if ((classrooms[i].Seats_count >= need_seats_count) && (classrooms[i].Floor == need_floor) && (classrooms[i].Building == need_building)){
-                flag = 1;
-                Show_room_data(classrooms[i], i);
-            }
-        }
-        if (flag == 0){Console.WriteLine("Таких аудиторий нет");}
-        Console.Write("Нажмите enter для продолжения...");
-        Console.ReadLine();
-    }
 }
 
 class Program {
@@ -257,18 +216,67 @@ class Program {
         }
         
         if (choice == 3){
-            menu.Show_classrooms_with_seats_count(classrooms);
+            Console.Write("Количество посадочных мест: ");
+            int need_seats_count = menu.Enter_number();
+            int flag = 0;
+            for (int i=0; i<classrooms.Length; i++){
+                if (classrooms[i].Classroom_have_seats_count(need_seats_count)){
+                    flag = 1;
+                    menu.Show_room_data(classrooms[i], i);
+            }
         }
+        if (flag == 0){Console.WriteLine("Таких аудиторий нет");}
+        Console.Write("Нажмите enter для продолжения...");
+        Console.ReadLine();
+    }
+        
         
         if (choice == 4){
-            menu.Show_classrooms_with_computers_count(classrooms);
+            Console.Write("Количество компьютеров: ");
+            int need_computers_count = menu.Enter_number();
+            int flag = 0;
+            for (int i=0; i<classrooms.Length; i++){
+                if (classrooms[i].Classroom_have_computers_count(need_computers_count)){
+                    flag = 1;
+                    menu.Show_room_data(classrooms[i], i);
+            }
+        }
+        if (flag == 0){Console.WriteLine("Таких аудиторий нет");}
+        Console.Write("Нажмите enter для продолжения...");
+        Console.ReadLine();
         }
         
         if (choice == 5){
-            menu.Show_classrooms_with_computers_on_floor(classrooms);
+            Console.Write("Этаж: ");
+            int need_floor = menu.Enter_number();
+            int flag = 0;
+            for (int i=0; i<classrooms.Length; i++){
+                if (classrooms[i].Classroom_with_computers_on_floor(need_floor)){
+                    flag = 1;
+                    menu.Show_room_data(classrooms[i], i);
+            }
         }
+        if (flag == 0){Console.WriteLine("Таких аудиторий нет");}
+        Console.Write("Нажмите enter для продолжения...");
+        Console.ReadLine();
+    }
         if (choice == 6){
-            menu.Show_classrooms_with_seats_count_on_floor_on_building(classrooms);
+             Console.Write("Количество посадочных мест: ");
+        int need_seats_count = menu.Enter_number();
+        Console.Write("Корпус: ");
+        int need_building = menu.Enter_number();
+        Console.Write("Этаж: ");
+        int need_floor = menu.Enter_number();
+        int flag = 0;
+        for (int i=0; i<classrooms.Length; i++){
+            if (classrooms[i].Classroom_with_seats_count_on_floor_on_building(need_seats_count, need_floor, need_building)){
+                flag = 1;
+                menu.Show_room_data(classrooms[i], i);
+            }
+        }
+        if (flag == 0){Console.WriteLine("Таких аудиторий нет");}
+        Console.Write("Нажмите enter для продолжения...");
+        Console.ReadLine();
         }
         if (choice == 7){
             classrooms = menu.Update_room_data(classrooms);
