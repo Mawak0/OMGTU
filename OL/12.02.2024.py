@@ -1,7 +1,13 @@
 stri = ""
 persons = [] # [xid, name, subs] subs = [[xid1, name1], [xid2, name2], ...]
+
+
+path = "temp"
+f = open(path, "r")
+
+
 while True:
-    stri = input()
+    stri = f.readline().strip()
     if stri == "END":
         break
     if len(stri.split(" ")) == 1:
@@ -21,7 +27,7 @@ while True:
     if not added:
         persons.append([xid, name, []])
 
-    stri = input()
+    stri = f.readline().strip()
     if len(stri.split(" ")) == 1:
         xid = int(stri)
         name = None
@@ -34,7 +40,7 @@ while True:
         if persons[i][0] == boss_xid:
             persons[i][2].append([xid, name])
 
-need_boss = input()
+need_boss = f.readline().strip()
 need_boss_id = -1
 need_boss_name = -1
 try:
