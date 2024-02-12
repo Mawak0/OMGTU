@@ -11,7 +11,6 @@ def prima(edges):
         points.add(e[0])
         points.add(e[1])
     points = list(points)
-    print(edges)
     def done(points, a_points):
         flag = True
         for p in points:
@@ -29,7 +28,7 @@ def prima(edges):
                 a_points.append(e[0])
                 cost += e[2]
                 break
-    print(cost)
+    return(cost)
 
 
 
