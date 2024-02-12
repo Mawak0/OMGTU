@@ -36,9 +36,16 @@ while True:
         xid = int(s[0])
         name = s[1]
 
+    in_p = False
     for i in range(0, len(persons)):
         if persons[i][0] == boss_xid:
             persons[i][2].append([xid, name])
+        if (persons[i][0] == xid) and name != None:
+            persons[i][1] = name
+        if persons[i][0] == xid:
+            in_p = True
+    if not in_p:
+        persons.append([xid, name, []])
 
 need_boss = f.readline().strip()
 need_boss_id = -1
@@ -77,22 +84,24 @@ while old_len != new_len:
     new_len = len(total_subs)
 
 
-for xid in sorted(total_subs_ids):
-    printed = False
-    formated_xid = str(xid)
-    while len(str(formated_xid)) != 4:
-        formated_xid = "0"+formated_xid
-    for q in range(0, len(total_subs)):
-        if total_subs[q][0] == xid:
-            if total_subs[q][1] != None:
-                print(formated_xid, total_subs[q][1])
-                printed = True
-            else:
-                for i in range(0, len(persons)):
-                    if persons[i][0] == xid:
-                        print(formated_xid, persons[i][1])
-                        printed = True
-            if not printed:
-                print(formated_xid, "Unknown Name")
-
-
+if len(total_subs_ids) == 0:
+    print("NO")
+else:
+    for xid in sorted(total_subs_ids):
+        printed = False
+        formated_xid = str(xid)
+        while len(str(formated_xid)) != 4:
+            formated_xid = "0"+formated_xid
+        for q in range(0, len(total_subs)):
+            if total_subs[q][0] == xid:
+                if total_subs[q][1] != None:
+                    print(formated_xid, total_subs[q][1])
+                    printed = True
+                else:
+                    for i in range(0, len(persons)):
+                        if persons[i][0] == xid:
+                            if persons[i][1] != None:
+                                print(formated_xid, persons[i][1])
+                                printed = True
+                if not printed:
+                    print(formated_xid, "Unknown Name")
