@@ -23,10 +23,12 @@ def prima(edges):
             if ((e[0] in a_points) and (e[1] not in a_points)):
                 a_points.append(e[1])
                 cost += e[2]
+                edges.remove(e)
                 break
             elif ((e[1] in a_points) and (e[0] not in a_points)):
                 a_points.append(e[0])
                 cost += e[2]
+                edges.remove(e)
                 break
     return(cost)
 
