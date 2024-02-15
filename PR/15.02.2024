@@ -1,0 +1,36 @@
+class Solver{
+    public static Double[] Solve(Double a, Double b, Double c){
+        if (a < 0.00000001){throw new ArgumentException("Not a square equation");}
+        Double[] outp = new Double[0];
+        Console.WriteLine(Convert.ToString(a));
+        int p1 = 0;
+        int p2 = 0;
+        int p3 = 0;
+        try{p1 = Convert.ToInt32((Convert.ToString(a).Split('-')[1]));}
+        catch{p1 = 0;}
+        try{p2 = Convert.ToInt32((Convert.ToString(b).Split('-')[1]));}
+        catch{p2 = 0;}
+        try{p3 = Convert.ToInt32((Convert.ToString(c).Split('-')[1]));}
+        catch{p3 = 0;}
+        
+        int p = Math.Max(p1, p2);
+        p = Math.Max(p, p3);
+        a = a * Math.Pow(10, p);
+        b = b * Math.Pow(10, p);
+        c = c * Math.Pow(10, p);
+        Console.WriteLine(a);
+        Console.WriteLine(b);
+        Console.WriteLine(c);
+        double D = Math.Pow(b, 2) -4*a*c;
+        if (D < 0){return outp;}
+        if (D > 0){
+            Array.Resize(ref outp, 1);
+            outp[0] = (-b + Math.Sqrt(D))/2*a;
+        }
+        Array.Resize(ref outp, 2);
+        outp[1] = (-b - Math.Sqrt(D))/2*a;
+        return outp;
+    }
+}
+
+Solver.Solve(0.0000000000000001,4,3)
