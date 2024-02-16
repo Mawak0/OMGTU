@@ -1,0 +1,76 @@
+/******************************************************************************
+
+
+
+*******************************************************************************/
+using System;
+using System.Collections;
+using System.Linq;
+
+
+class Menu{
+    
+    
+    public int ShowMenu(){
+        Console.WriteLine("1) Создать Array\n2) Узнать количество элементов в коллекции\n3) Выполнить бинарный поиск элемента\n4) Скопировать коллекцию\n");
+        return Convert.ToInt32(Console.ReadLine());
+    }
+    
+    public string[] CreateArray(){
+        Console.WriteLine("Создан массив вида {'AA', 'AB', 'AC', 'BD', 'WE', 'DF'}");
+        string[] a = new string[6];
+        a[0] = "AA";
+        a[1] = "AB";
+        return a;
+    }
+    
+    public void Get_Count(string[] arr){
+        Console.WriteLine($"Количество элементов в коллекции {arr.Count()}");
+    }
+    public void Make_BinSearch(string[] arr){
+        Console.Write("Введите элемент, который требуется найти: ");
+        string need_str = Console.ReadLine();
+        int index = Array.BinarySearch(arr, need_str);
+        if (index == -1){Console.WriteLine("Элемент не найден");}
+        else {Console.WriteLine($"Индекс элемента: {index}");}
+        
+    }
+    
+    public void ShowArray(string[] array){
+        foreach (var e in array){
+            Console.Write($" {e}");
+        }
+    }
+
+    public void Make_Copy(string[] array){
+        string[] array2 = new string[array.Count()];
+        System.Array.Copy(array, array2, 0);
+        Console.WriteLine("Коллекция скопирована, копия: ");
+        ShowArray(array2);
+    }
+    
+}
+
+
+class HelloWorld {
+  static void Main() {
+    Menu menu = new Menu();
+    int c = -1;
+    string[] array = new string[0];
+    while (c != 9){
+        c = menu.ShowMenu();
+        if (c == 1){
+            array = menu.CreateArray();
+        }
+        if (c == 2){
+            menu.Get_Count(array);
+        }
+        if (c == 3){
+            menu.Make_BinSearch(array);
+        }
+        if (c == 4){
+            menu.Make_Copy(array);
+        }
+    }
+  }
+}
