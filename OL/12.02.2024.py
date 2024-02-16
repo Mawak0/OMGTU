@@ -1,8 +1,8 @@
 stri = ""
-persons = [] # [xid, name, subs] subs = [[xid1, name1], [xid2, name2], ...]
+persons = dict() #[id: [name, [sub1id, sub2id]]]
 
 
-path = "temp"
+path = "D:/A/code/C#/OMGTU/temp.txt"
 f = open(path, "r")
 
 
@@ -18,16 +18,14 @@ while True:
         xid = int(s[0])
         name = s[1]
     boss_xid = xid
-    added = False
-    for i in range(0, len(persons)):
-        if persons[i][0] == xid:
-            if name != None:
-                persons[i][1] = name
-            added = True
-    if not added:
-        persons.append([xid, name, []])
+    if xid not in persons.keys():
+        persons.update({xid: [None, []]})
+    if name != None:
+        persons[xid][0] = name
 
     stri = f.readline().strip()
+    if stri == "END":
+        break
     if len(stri.split(" ")) == 1:
         xid = int(stri)
         name = None
@@ -35,17 +33,12 @@ while True:
         s = stri.split(" ", 1)
         xid = int(s[0])
         name = s[1]
+    if xid not in persons.keys():
+        persons.update({xid: [None, []]})
+    if name != None:
+        persons[xid][0] = name
+    persons[boss_xid][1].append(xid)
 
-    in_p = False
-    for i in range(0, len(persons)):
-        if persons[i][0] == boss_xid:
-            persons[i][2].append([xid, name])
-        if (persons[i][0] == xid) and name != None:
-            persons[i][1] = name
-        if persons[i][0] == xid:
-            in_p = True
-    if not in_p:
-        persons.append([xid, name, []])
 
 need_boss = f.readline().strip()
 need_boss_id = -1
@@ -55,53 +48,31 @@ try:
 except:
     need_boss_name = need_boss
 
+if need_boss_id == -1:
+    for e in persons.items():
+        if e[1][0] == need_boss_name:
+            need_boss_id = e[0]
 
-total_subs = []
-total_subs_ids = []
-boss = None
-for p in persons:
-    if p[0] == need_boss_id:
-        boss = p
-        break
-    if p[1] == need_boss_name:
-        boss = p
-        break
-total_subs += boss[2]
-for s in total_subs:
-    total_subs_ids.append(s[0])
-old_len = len(total_subs)
-new_len = old_len+1
+subs = []
+newlen = len(subs)
+oldlen = -1
 
-while old_len != new_len:
-    old_len = new_len
-    for s in total_subs:
-        for i in range(0, len(persons)):
-            if persons[i][0] == s[0]:
-                for sub in persons[i][2]:
-                    if sub not in total_subs:
-                        total_subs.append(sub)
-                        total_subs_ids.append(sub[0])
-    new_len = len(total_subs)
+subs += persons[need_boss_id][1]
 
+while oldlen != newlen:
+    oldlen = newlen
+    for sub in subs:
+        subs += persons[sub][1]
+    subs = list(set(subs))
+    newlen = len(subs)
 
-if len(total_subs_ids) == 0:
-    print("NO")
-else:
-    for xid in sorted(total_subs_ids):
-        printed = False
-        formated_xid = str(xid)
-        while len(str(formated_xid)) != 4:
-            formated_xid = "0"+formated_xid
-        for q in range(0, len(total_subs)):
-            if total_subs[q][0] == xid:
-                if total_subs[q][1] != None:
-                    print(formated_xid, total_subs[q][1])
-                    printed = True
-                else:
-                    for i in range(0, len(persons)):
-                        if persons[i][0] == xid:
-                            if persons[i][1] != None:
-                                print(formated_xid, persons[i][1])
-                                printed = True
-                if not printed:
-                    print(formated_xid, "Unknown Name")
+subs.sort()
+
+for sub in subs:
+    name = persons[sub][0]
+    if name == None:
+        name = "Unknown Name"
+    substr = str(sub)
+    while len(substr) != 4:
+        substr = "0"+substr
+    print(substr, name)
