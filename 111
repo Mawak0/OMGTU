@@ -1,73 +1,43 @@
 /******************************************************************************
 
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
 
 
 *******************************************************************************/
 using System;
 using System.Collections;
-
-
-
-class Menu{
-    
-    
-    public int ShowMenu(){
-        Console.WriteLine("1) Создать Array\n2) Узнать количество элементов в коллекции\n3) Выполнить бинарный поиск элемента\n4) Скопировать коллекцию\n");
-        return Convert.ToInt32(Console.ReadLine());
-    }
-    
-    public ArrayList CreateArray(){
-        Console.WriteLine("Создана коллекция вида {'AA', 'AB', 'AC', 'BD', 'WE', 'DF'}");
-        return new ArrayList() {"AA", "AB", "AC", "BD", "WE", "DF"};
-    }
-    
-    public void Get_Count(ArrayList arr){
-        Console.WriteLine($"Количество элементов в коллекции {arr.Count}");
-    }
-    public void Make_BinSearch(ArrayList arr){
-        Console.Write("Введите элемент, который требуется найти: ");
-        string need_str = Console.ReadLine();
-        int index = arr.BinarySearch(need_str);
-        if (index == -1){Console.WriteLine("Элемент не найден");}
-        else {Console.WriteLine($"Индекс элемента: {index}");}
-        
-    }
-    
-    public void ShowArray(ArrayList array){
-        foreach (var e in array){
-            Console.Write($" {e}");
-        }
-    }
-
-    public ArrayList Make_Copy(ArrayList array){
-        string[] array2 = new string[array.Count];
-        array.CopyTo(array2);
-        Console.WriteLine("Коллекция скопирована, копия: ");
-        ShowArray(array2);
-    }
-    
-}
-
-
 class HelloWorld {
   static void Main() {
-    Menu menu = new Menu();
-    int c = -1;
-    ArrayList array = new ArrayList();
-    while (c != 9){
-        c = menu.ShowMenu();
-        if (c == 1){
-            array = menu.CreateArray();
-        }
-        if (c == 2){
-            menu.Get_Count(array);
-        }
-        if (c == 3){
-            menu.Make_BinSearch(array);
-        }
-        if (c == 4){
-            menu.Make_Copy(array);
-        }
-    }
+      
+      
+      Console.WriteLine("Введите количество элементов");
+      int k = int.Parse(Console.ReadLine());
+      int[] a = new int[k];
+      Console.WriteLine("Введите элементы");
+      for (int i = 0; i < k; i++)
+      {
+        a[i] = int.Parse(Console.ReadLine());
+      }
+      int[] b = new int[k+19];
+      for (int i = 0; i < k; i++)
+      {
+        b[i] = 9;
+      }
+      System.Array.Copy(a,b,8);
+      
+      //PrintValue(b);
+      
+      ArrayList arl = new ArrayList();
+      Console.WrireLine("Введите количество элементов");
+      int k = Console.ReadLine();
+      Console.WrireLine("Введите элементы");
+      for (int i = 0; i<k; i++)
+      {
+        arl.Add(Console.ReadLine());
+      }
   }
 }
