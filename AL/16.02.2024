@@ -162,7 +162,7 @@ class HelloWorld
                 menu.MakeIndexOf(array);
             }
             if (c == 8) {
-                array = menu.MakeReverse(array);
+                menu.MakeReverse(array);
             }
             if (c == 9) {
                 menu.MakeResize(array);
