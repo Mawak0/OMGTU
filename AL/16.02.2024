@@ -1,76 +1,176 @@
-/******************************************************************************
-
-
-
-*******************************************************************************/
 using System;
-using System.Collections;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
-
-class Menu{
-    
-    
-    public int ShowMenu(){
-        Console.WriteLine("1) Создать Array\n2) Узнать количество элементов в коллекции\n3) Выполнить бинарный поиск элемента\n4) Скопировать коллекцию\n");
+class Menu
+{
+    public int ShowMenu()
+    {
+        Console.WriteLine("\n\n\n\n0) Назад \n1) Создать массив\n2) Узнать количество элементов в массиве (Length)\n3) Выполнить бинарный поиск элемента (BinarySearch)\n4) Скопировать коллекцию(Copy)\n5) Выполнить поиск вхождения подстроки(Find)\n6) Выполнить поиск вхождения подстроки с конца(FindLast)\n7) Нахождение индекса элемента (IndexOf)\n8) Перевернуть массив (Reverse)\n9) Изменить размер массива (Resize)\n10) Сортировать массив (Sort)");
         return Convert.ToInt32(Console.ReadLine());
     }
-    
-    public string[] CreateArray(){
+
+    public string[] CreateArray()
+    {
         Console.WriteLine("Создан массив вида {'AA', 'AB', 'AC', 'BD', 'WE', 'DF'}");
-        string[] a = new string[6];
-        a[0] = "AA";
-        a[1] = "AB";
+        string[] a = {"RT", "AA", "AB", "AC", "BD", "WE", "DF" };
         return a;
     }
-    
-    public void Get_Count(string[] arr){
-        Console.WriteLine($"Количество элементов в коллекции {arr.Count()}");
+
+    public void GetCount(string[] arr)
+    {
+        Console.WriteLine($"Количество элементов в коллекции {arr.Length}");
     }
-    public void Make_BinSearch(string[] arr){
+
+    public void MakeBinSearch(string[] arr)
+    {
         Console.Write("Введите элемент, который требуется найти: ");
-        string need_str = Console.ReadLine();
-        int index = Array.BinarySearch(arr, need_str);
-        if (index == -1){Console.WriteLine("Элемент не найден");}
-        else {Console.WriteLine($"Индекс элемента: {index}");}
-        
-    }
-    
-    public void ShowArray(string[] array){
-        foreach (var e in array){
-            Console.Write($" {e}");
+        string needStr = Console.ReadLine();
+        int index = Array.BinarySearch(arr, needStr);
+        if (index < 0)
+        {
+            Console.WriteLine("Элемент не найден");
+        }
+        else
+        {
+            Console.WriteLine($"Индекс элемента: {index}");
         }
     }
 
-    public void Make_Copy(string[] array){
-        string[] array2 = new string[array.Count()];
-        System.Array.Copy(array, array2, 0);
+    public void ShowArray(string[] array)
+    {
+        foreach (var e in array)
+        {
+            Console.Write($" {e}");
+        }
+        Console.WriteLine();
+    }
+
+    public void MakeCopy(string[] array)
+    {
+        string[] array2 = new string[array.Length];
+        Array.Copy(array, array2, array.Length);
         Console.WriteLine("Коллекция скопирована, копия: ");
         ShowArray(array2);
     }
-    
-}
 
-
-class HelloWorld {
-  static void Main() {
-    Menu menu = new Menu();
-    int c = -1;
-    string[] array = new string[0];
-    while (c != 9){
-        c = menu.ShowMenu();
-        if (c == 1){
-            array = menu.CreateArray();
+    public void MakeFind(string[] array)
+    {
+        Console.Write("Введите подстроку, для нахожения первого элемента массива, который ее содержит: ");
+        string needStr = Console.ReadLine();
+        try
+        {
+            string elem = Array.Find(array, x => x.Contains(needStr));
+            Console.WriteLine($"Найденая строка: {elem}");
         }
-        if (c == 2){
-            menu.Get_Count(array);
-        }
-        if (c == 3){
-            menu.Make_BinSearch(array);
-        }
-        if (c == 4){
-            menu.Make_Copy(array);
+        catch (ArgumentNullException)
+        {
+            Console.WriteLine("Элемент не найден");
         }
     }
-  }
+
+    public void MakeFindLast(string[] array)
+    {
+        Console.Write("Введите подстроку, для нахожения последнего элемента массива, который ее содержит: ");
+        string needStr = Console.ReadLine();
+        try
+        {
+            string elem = Array.FindLast(array, x => x.Contains(needStr));
+            Console.WriteLine($"Найденая строка: {elem}");
+        }
+        catch (ArgumentNullException)
+        {
+            Console.WriteLine("Элемент не найден");
+        }
+    }
+
+    public void MakeIndexOf(string[] array) {
+        Console.Write("Введите элемент, который требуется найти: ");
+        string needStr = Console.ReadLine();
+        int index = Array.IndexOf(array, needStr);
+        if (index < 0)
+        {
+            Console.WriteLine("Элемент не найден");
+        }
+        else
+        {
+            Console.WriteLine($"Индекс элемента: {index}");
+        }
+    }
+    public void MakeReverse(string[] array) {
+        string[] array2 = new string[array.Length];
+        Array.Copy(array, array2, array.Length);
+        Array.Reverse(array2);
+        Console.WriteLine("Перевернутый массив выглядит так: ");
+        ShowArray(array);
+    }
+
+    public void MakeResize(string[] array) {
+        Console.WriteLine("Новый размер массива: ");
+        int new_size = Convert.ToInt32(Console.ReadLine());
+        string[] array2 = new string[array.Length];
+        Array.Copy(array, array2, array.Length);
+        Array.Resize(ref array2, new_size);
+        Console.WriteLine($"Массив длинны {new_size} выглядит так: ");
+        ShowArray(array2);
+    }
+
+    public void MakeSort(string[] array) {
+        string[] array2 = new string[array.Length];
+        Array.Copy(array, array2, array.Length);
+        Array.Sort(array2);
+        Console.WriteLine($"Сортированный массив выглядит так: ");
+        ShowArray(array2);
+    }
+}
+
+class HelloWorld
+{
+    static void Main()
+    {
+        Menu menu = new Menu();
+        int c = -1;
+        string[] array = new string[0];
+        while (c != 0)
+        {
+            c = menu.ShowMenu();
+            if (c == 1)
+            {
+                array = menu.CreateArray();
+            }
+            if (c == 2)
+            {
+                menu.GetCount(array);
+            }
+            if (c == 3)
+            {
+                menu.MakeBinSearch(array);
+            }
+            if (c == 4)
+            {
+                menu.MakeCopy(array);
+            }
+            if (c == 5)
+            {
+                menu.MakeFind(array);
+            }
+            if (c == 6) {
+                menu.MakeFindLast(array);
+            }
+            if (c == 7) {
+                menu.MakeIndexOf(array);
+            }
+            if (c == 8) {
+                array = menu.MakeReverse(array);
+            }
+            if (c == 9) {
+                menu.MakeResize(array);
+            }
+            if (c == 10) {
+                menu.MakeSort(array);
+            }
+            
+        }
+    }
 }
