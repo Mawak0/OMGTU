@@ -1,0 +1,27 @@
+class TrapezoidalRule{
+    public static double Solve(Func<Double, Double> f, double a, double b, double dx){
+        double summ = 0;
+        if (dx < 1.1102230246251565E-16) {throw new ArgumentException ("dx меньше машиннного шага");}
+        else {
+            double current_posx = a;
+            while (current_posx < b){
+                current_posx += dx;
+                if (current_posx > b){
+                    dx = Math.Abs((current_posx-b));
+                    current_posx = b;
+    
+                }
+                double p = Math.Abs(((f(current_posx-dx)+f(current_posx))*dx)/2);
+                summ += p;
+    
+            }
+            return summ;
+        }
+    }
+}
+
+Func<double, double> f = (double x) => -x*x + 9;
+double a = 1;
+double b = 4;
+double dx = 0.0000000000001;
+Console.WriteLine(TrapezoidalRule.Solve(f,a,b,dx));
