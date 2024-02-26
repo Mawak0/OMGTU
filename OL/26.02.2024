@@ -9,7 +9,7 @@ for line in lines:
     for comp in comps:
         try:
             a = int(comp)
-            line = line.replace(comp, "_"+comp+"_")
+            line = line.replace(" "+comp, " _"+comp+"_ ", 1)
         except:
             pass
     if "MIX" in line:
@@ -26,7 +26,7 @@ for line in lines:
         parts_of_magic.append(s)
     if "FIRE" in line:
         s = line.replace("FIRE", "").replace(" ", "")
-        s = "FR" + s + "FR"
+        s = "FR" + s + "RF"
         parts_of_magic.append(s)
 
 
