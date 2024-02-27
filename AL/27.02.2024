@@ -79,14 +79,18 @@ class Program
 
         Console.WriteLine($"Отчет за {need_date}");
         Console.WriteLine("Результат из хеш таблицы: ");
+        int sum = 0;
         foreach (DictionaryEntry e in h2)
         {
-            Console.WriteLine($"{e.Key} - {e.Value} минут");
+            sum += Convert.ToInt32(e.Value);
         }
+        Console.WriteLine($"Суммарное время разговоров: {sum} минут");
         Console.WriteLine("\n\nРезультат из словаря: ");
+        sum = 0;
         foreach (var e in d2)
         {
-            Console.WriteLine($"{e.Key} - {e.Value} минут");
+            sum += Convert.ToInt32(e.Value);
         }
+        Console.WriteLine($"Суммарное время разговоров: {sum} минут");
     }
 }
