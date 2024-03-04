@@ -1,7 +1,7 @@
 class TrapezoidalRule{
     public static double Solve(Func<Double, Double> f, double a, double b, double dx){
         double summ = 0;
-        double epsilon = 1.1102230246251565E-7;
+        double epsilon = 10E-7;
         if (dx < epsilon) {throw new ArgumentException ("dx меньше epsilon");}
             double current_posx = a;
             while (current_posx < b){
