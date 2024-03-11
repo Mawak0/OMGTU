@@ -5,7 +5,11 @@ def Show_weigth_matrix(weigth_matrix):
         print(line)
 
 def Dijkstra(weight_matrix, start, finish):
-    pass
+    work_matrix = []
+    for p in range(0, len(points) + 1):
+        weigth_matrix.append([float('inf') for i in range(0, len(points) + 1)])
+    Show_weigth_matrix(weight_matrix)
+    Show_weigth_matrix(work_matrix)
 
 
 edges = []
