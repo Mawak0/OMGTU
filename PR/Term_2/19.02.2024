@@ -2,26 +2,20 @@ class TrapezoidalRule{
     public static double Solve(Func<Double, Double> f, double a, double b, double dx){
         double summ = 0;
         double epsilon = 10E-7;
+        if (!double.IsNormal(a)) {throw new ArgumentException ("a is not a number");}
+        if (!double.IsNormal(b)) {throw new ArgumentException ("b is not a number");}
         if (dx < epsilon) {throw new ArgumentException ("dx меньше epsilon");}
-            double current_posx = a;
-            while (current_posx < b){
-                current_posx += dx;
-                //Console.WriteLine(current_posx);
-                if (current_posx > b){
-                    dx = dx - Math.Abs((current_posx-b));
-                    current_posx = b;
-    
-                }
-                double p = Math.Abs(((f(current_posx-dx)+f(current_posx))*dx)/2);
-                summ += p;
-    
-            }
-            return summ;
+        double current_posx = a;
+        int dist_count = Convert.ToInt32(Math.Ceiling((b-a)/dx)); //кол-во отрезков
+        for (int i = 0; i <= dist_count; i++){
+
+            current_posx = a + dx * i;
+
+            double p = Math.Abs(((f(current_posx)+f(current_posx+dx))*dx)/2);
+            summ += p;
+
+        }
+        return summ;
     }
 }
 
-Func<double, double> f = (double x) => -x*x + 9;
-double a = -3;
-double b = 3;
-double dx = 0.000001;
-Console.WriteLine(TrapezoidalRule.Solve(f,a,b,dx));
