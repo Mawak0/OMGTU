@@ -6,57 +6,42 @@ def Show_weigth_matrix(weigth_matrix):
         print(line)
     print("--------------------")
 
+def get_min_mark_point(marks):
+    min_val = float("inf")
+    key = ""
+    for e in marks.items():
+        if e[1] < min_val:
+            min_val = e[1]
+            key = e[0]
+    return [key, min_val]
+    
+def get_neighbours(weight_matrix, point):
+    neighbours = []
+    for j in range(1, len(points)+1):
+        if weight_matrix[point][j] != float('inf'):
+            neighbours.append(j)
+    return neighbours
+
 def Dijkstra(weight_matrix, start, finish):
-
-    work_matrix = []
-    for p in range(0, len(points) + 2):
-        work_matrix.append([float('inf') for i in range(0, len(points) + 2)])
-    work_matrix[start][len(points) + 1] = 0
-    def Get_additional_weights():
-        summ = 0
-        for line in range(1, len(points)+1):
-            if weight_matrix[line][len(points)+1] != float('inf'):
-                summ += weight_matrix[line][len(points)+1]
-        return summ
-
-    def Get_current_minval_lines():
-        minval_lines = []
-        for line in range(1, len(points)+1):
-            if work_matrix[line][len(points)] != float('inf'):
-                minval_lines.append(line)
-        return minval_lines
-    def Process_line(line_num):
-        for j in range(1, len(points)+1):
-            if (j != start) and (j not in Get_current_minval_lines()):
-                #print(line_num, j)
-                work_matrix[line_num][j] = weight_matrix[line_num][j]+Get_additional_weights()
-
-
-        minval = float('inf')
-        minnext = -1
-        for j in range(1, len(points) + 1):
-            if weight_matrix[line_num][j] < minval:
-                minval = weight_matrix[line_num][j]
-                minnext = j
-
-
-        work_matrix[minnext][len(points)+1] = minval
-        return minnext
-
-    minnext = Process_line(start)
-    #print(minnext)
-    #Show_weigth_matrix(work_matrix)
-    print(Process_line(minnext))
-    Show_weigth_matrix(work_matrix)
-    # while minnext != finish:
-    #     Process_line(minnext)
-    # Show_weigth_matrix(work_matrix)
-
-
-
-
-
-
+    Show_weigth_matrix(weight_matrix)
+    checked_points = []
+    marks = dict()
+    for p in points:
+        if p == start:
+            marks[p] = 0
+        else:
+            marks[p] = float("inf")
+    while (len(points) != len(checked_points)) and (finish not in checked_points):
+        min_mark_point, min_mark = get_min_mark_point(marks)
+        neighbours = get_neighbours(weight_matrix, min_mark_point)
+        for nei in neighbours:
+            #print(nei)
+            if nei not in checked_points:
+                #print(marks[nei], min_mark, weight_matrix[min_mark_point][nei])
+                marks[nei] = min([marks[nei], min_mark+weight_matrix[min_mark_point][nei]])
+        checked_points.append(min_mark_point)
+        print(marks)
+    return marks[finish]
 
 edges = []
 edges_count = int(input("Введите кол-во ребер графа: "))
@@ -77,12 +62,13 @@ for e in edges:
 weigth_matrix = []
 
 
-for p in range(0, len(points)+2):
-    weigth_matrix.append([float('inf') for i in range(0, len(points)+2)])
+for p in range(0, len(points)+1):
+    weigth_matrix.append([float('inf') for i in range(0, len(points)+1)])
 
 
 for e in edges:
     weigth_matrix[e[0]][e[1]] = e[2]
+    weigth_matrix[e[1]][e[0]] = e[2]
 
 start = int(input("Введите начальную точку: "))
 finish = int(input("Введите конечную точку: "))
