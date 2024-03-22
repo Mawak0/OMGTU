@@ -6,13 +6,14 @@ def Show_weigth_matrix(weigth_matrix):
         print(line)
     print("--------------------")
 
-def get_min_mark_point(marks):
+def get_min_mark_point(marks, checked_points):
     min_val = float("inf")
     key = ""
     for e in marks.items():
-        if e[1] < min_val:
-            min_val = e[1]
-            key = e[0]
+        if e[0] not in checked_points:
+            if e[1] < min_val:
+                min_val = e[1]
+                key = e[0]
     return [key, min_val]
     
 def get_neighbours(weight_matrix, point):
@@ -23,7 +24,7 @@ def get_neighbours(weight_matrix, point):
     return neighbours
 
 def Dijkstra(weight_matrix, start, finish):
-    Show_weigth_matrix(weight_matrix)
+    #Show_weigth_matrix(weight_matrix)
     checked_points = []
     marks = dict()
     for p in points:
@@ -32,15 +33,13 @@ def Dijkstra(weight_matrix, start, finish):
         else:
             marks[p] = float("inf")
     while (len(points) != len(checked_points)) and (finish not in checked_points):
-        min_mark_point, min_mark = get_min_mark_point(marks)
+    #while (len(points) != len(checked_points)):
+        min_mark_point, min_mark = get_min_mark_point(marks, checked_points)
         neighbours = get_neighbours(weight_matrix, min_mark_point)
         for nei in neighbours:
-            #print(nei)
             if nei not in checked_points:
-                #print(marks[nei], min_mark, weight_matrix[min_mark_point][nei])
                 marks[nei] = min([marks[nei], min_mark+weight_matrix[min_mark_point][nei]])
         checked_points.append(min_mark_point)
-        print(marks)
     return marks[finish]
 
 edges = []
