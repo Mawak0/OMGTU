@@ -54,28 +54,29 @@ def Bellman(weight_matrix, start):
         print("Минимальные расстояния от вершины "+str(start)+" до остальных вершин")
         for i in range(1, len(points)+1):
             print("до "+str(i)+" вершины : "+str(work_matrix[i][-1]))
+        back_ways = []
+        for i in range(0, len(points)):
+            back_ways.append([list(points)[i]])
 
-    back_ways = []
-    for i in range(0, len(points)):
-        back_ways.append([list(points)[i]])
+        for s in range(1, len(points) + 1):
+            search_depth = 0
+            while (back_ways[s - 1][-1] != start) and (len(points) - 2 - search_depth != -1):
+                ss = back_ways[s - 1][-1]
+                inputs = get_point_inputs(weigth_matrix, ss)
+                for r in inputs:
+                    if (work_matrix[r][len(points) - 2 - search_depth] + weight_matrix[r][ss] == work_matrix[ss][
+                        len(points) - 1 - search_depth]):
+                        back_ways[s - 1].append(r)
+                        break
+                search_depth += 1
+        print("Пути от вершины " + str(start) + " до остальных вершин:")
+        for way in back_ways:
+            path = ""
+            for w in way[::-1]:
+                path = path + " 🢡 " + str(w)
+            print("до вершины " + str(way[0]) + " : " + path)
 
 
-    for s in range(1, len(points)+1):
-        search_depth = 0
-        while (back_ways[s-1][-1] != start) and (len(points)-2-search_depth != -1):
-            ss = back_ways[s-1][-1]
-            inputs = get_point_inputs(weigth_matrix, ss)
-            for r in inputs:
-                if (work_matrix[r][len(points)-2-search_depth] +weight_matrix[r][ss] == work_matrix[ss][len(points)-1-search_depth]):
-                    back_ways[s-1].append(r)
-                    break
-            search_depth += 1
-    print("Пути от вершины "+str(start)+" до остальных вершин:")
-    for way in back_ways:
-        path = ""
-        for w in way[::-1]:
-            path = path + " 🢡 "+str(w)
-        print("до вершины "+str(way[0])+" : "+path)
 
 
 
@@ -117,7 +118,7 @@ for p in range(0, len(points)+2):
 
 for e in edges:
     weigth_matrix[e[0]][e[1]] = e[2]
-Show_weigth_matrix(weigth_matrix)
+
 start = int(input("Введите начальную точку: "))
 
 Bellman(weigth_matrix, start)
