@@ -1,10 +1,9 @@
-f = open("temp", "r")
-lines = [s.strip() for s in f.readlines()]
-print(lines)
-
-magic = ""
-parts_of_magic = []
-for line in lines:
-    if "MIX" in line:
-        s = line.replace("MIX", "")
-        
+1 2 7
+1 3 9
+1 6 14
+2 3 10
+2 4 15
+3 4 11
+3 6 2
+6 5 9
+5 4 6

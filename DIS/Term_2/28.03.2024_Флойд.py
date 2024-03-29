@@ -13,7 +13,7 @@ def get_point_inputs(weigth_matrix, point):
     return point_inputs
 
 def Floid(weight_matrix, start, finish):
-    for e in edges:
+    for e in full_edges:
         next[e[0]][e[1]] = e[1]
     for p in points:
         next[p][p] = p
@@ -24,9 +24,9 @@ def Floid(weight_matrix, start, finish):
         for a in range(1, len(points)+1):
             for b in range(1, len(points)+1):
                 #Show_weigth_matrix(matrix[prom])
-                matrix[prom][a][b] = min([matrix[prom-1][a][b], matrix[prom-1][a][prom]+matrix[prom-1][prom][b]])
                 if matrix[prom-1][a][prom]+matrix[prom-1][prom][b] < matrix[prom-1][a][b]:
                     next[a][b] = next[a][prom]
+                matrix[prom][a][b] = min([matrix[prom-1][a][b], matrix[prom-1][a][prom]+matrix[prom-1][prom][b]])
     Show_weigth_matrix(matrix[-1])
     print("Путь между вершинами "+str(start)+" и "+str(finish)+" = "+str(matrix[-1][start][finish]))
     path = []
@@ -65,10 +65,13 @@ for p in range(0, len(points ) +1):
     empty_matrix.append([float('inf') for i in range(0, len(points ) +1)])
     next.append([float('inf') for i in range(0, len(points ) +1)])
 
-
+full_edges = []
 for e in edges:
     weigth_matrix[e[0]][e[1]] = e[2]
     weigth_matrix[e[1]][e[0]] = e[2]
+    full_edges.append(e)
+    full_edges.append([e[1], e[0], e[2]])
+
 
 start = int(input("Введите начальную точку: "))
 finish = int(input("Введите конечную точку: "))
