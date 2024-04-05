@@ -22,6 +22,7 @@ class Calk<T>{
     public T Delenie(T a, T b){
         dynamic q = a;
         dynamic w = b;
+        if (w == 0){throw new ArgumentException("b == 0");}
         return q/w;
     }
 }
@@ -51,7 +52,15 @@ class HelloWorld {
         if (p == "1"){Console.WriteLine(c.Plus(a, b));}
         if (p == "2"){Console.WriteLine(c.Minus(a, b));}
         if (p == "3"){Console.WriteLine(c.Multiplication(a, b));}
-        if (p == "4"){Console.WriteLine(c.Delenie(a, b));}
+        if (p == "4"){
+            try{
+                Console.WriteLine(c.Delenie(a, b));
+            }
+            catch{
+                Console.WriteLine("Ошибка: Деление на ноль");
+            }
+            
+        }
     }
     if (h == "2"){
         Console.WriteLine("Введите первое число");
@@ -68,7 +77,13 @@ class HelloWorld {
         if (p == "1"){Console.WriteLine(c.Plus(a, b));}
         if (p == "2"){Console.WriteLine(c.Minus(a, b));}
         if (p == "3"){Console.WriteLine(c.Multiplication(a, b));}
-        if (p == "4"){Console.WriteLine(c.Delenie(a, b));}
+        if (p == "4")
+            try{
+                Console.WriteLine(c.Delenie(a, b));
+            }
+            catch{
+                Console.WriteLine("Ошибка: Деление на ноль");
+            }
     }
     
   }
