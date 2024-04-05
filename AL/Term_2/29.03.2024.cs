@@ -16,9 +16,22 @@ class Prog{
         public double Plus(float a, float b) => (a+b);
         public double Minus(float a, float b) => (a-b);
         public double Multiplication(float a, float b) => (a*b);
-        public double Division(float a, float b) => (a/b);
-        public double Sqrt(float a) => (Math.Sqrt(a));
-        public double Sin(float a) => (Math.)
+        public double Division(float a, float b){
+            if (b==0){
+                throw new ArgumentException("a = 0");
+            }
+            return (a/b);
+            
+        }
+        public double Sqrt(float a){
+            if (a < 0){
+                throw new ArgumentException("a < 0");
+            }
+            return Math.Sqrt(a);
+            
+        }
+        public double Sin(float a) => (Math.Sin(a));
+        public double Cos(float a) => (Math.Cos(a));
         public float[] EnterValues(){
                 Console.WriteLine("Введите два числа через пробел");
                 string s;
@@ -46,7 +59,9 @@ class Prog{
         Console.WriteLine("3)Умножение");
         Console.WriteLine("4)Деление");
         Console.WriteLine("5)Извлечение квадратного корня");
-        Console.WriteLine("6)Выход");
+        Console.WriteLine("6)Нахождение синуса");
+        Console.WriteLine("7)Нахождение косинуса");
+        Console.WriteLine("8)Выход");
         return Convert.ToInt32(Console.ReadLine());
     }
     delegate double BinaryMathAction(float a, float b);
@@ -58,9 +73,11 @@ class Prog{
         BinaryMathAction multiplication = Action.Multiplication;
         BinaryMathAction division = Action.Division;
         UnaryMathAction sqrt = Action.Sqrt;
+        UnaryMathAction sin = Action.Sin;
+        UnaryMathAction cos = Action.Cos;
         int c = 0;
         float[] f;
-        while (c != 6){
+        while (c != 8){
             c = Menu();
             if (c == 1){
                 f = Action.EnterValues();
@@ -75,13 +92,30 @@ class Prog{
                 Console.WriteLine(multiplication(f[0],f[1]));
             }
             if (c == 4){
-                f = Action.EnterValues();
-                Console.WriteLine(division(f[0],f[1]));
+                try{
+                    f = Action.EnterValues();
+                    Console.WriteLine(division(f[0],f[1]));
+                }
+                catch {
+                    Console.WriteLine("Ошибка: Нельзя делить на ноль");
+                }
             }
             if (c == 5){
-                Console.WriteLine(sqrt(Action.EnterValue()));
+                try{
+                    Console.WriteLine(sqrt(Action.EnterValue()));
+                }
+                catch{
+                    Console.WriteLine("Ошибка: Невозможно извлечь корень из отрицательного числа");
+                }
+            }
+            if (c == 6){
+                Console.WriteLine(sin(Action.EnterValue()));
+            }
+            if (c == 7){
+                Console.WriteLine(cos(Action.EnterValue()));
             }
         } 
     }
-    
 }
+
+
