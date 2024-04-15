@@ -1,1 +1,20 @@
-^((0?[0-9])|(1[0-9])|(2[0-4])):(([0-5][0-9]))$
+using System.Text.RegularExpressions;
+ 
+string pattern = @"^((0?[0-9])|(1[0-9])|(2[0-4])):(([0-5][0-9]))$";
+var data = new string[]
+{
+    "23:41",
+    "31:3445",
+    "123:904",
+    "1:20",
+    "22:67"
+};
+ 
+
+for(int i = 0; i < data.Length; i++)
+{
+    if (Regex.IsMatch(data[i], pattern))
+    {
+        Console.WriteLine(data[i]);
+    }
+}
