@@ -64,16 +64,14 @@ class HelloWorld {
         int min = 9999999;
         for (int i = 0; i < i1l; i++){
             int current_number = Convert.ToInt32(ReadLine("input_1", i));
+
             if ((min > current_number) && (current_number > low_border)){
                 min = current_number;
-                Console.WriteLine(min);
+
             }
-            low_border = min;
-            Console.WriteLine(min);
-            Console.WriteLine(low_border);
-            Console.ReadLine();
             
         }
+        low_border = min;
         for (int i = 0; i < i1l; i++){
             if (min == Convert.ToInt32(ReadLine("input_1", i))){
                 AppendLine(Convert.ToString(min), "output");
