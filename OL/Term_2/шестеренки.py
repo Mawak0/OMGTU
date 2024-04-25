@@ -35,7 +35,7 @@ def Prog(mode, input_path=None, output_path=None):
             return -1
         else:
             return 0
-    print(Z1, Z2)
+
 
     for i in range(0, len(connections)):
         if (gears[connections[i][0]][2] != 0) and (gears[connections[i][1]][2] == 0):
@@ -51,8 +51,6 @@ def Prog(mode, input_path=None, output_path=None):
                 gears[Z2][2] = 0
                 break
 
-    print(gears)
-    print(connections)
 
     if gears[Z2][2] != 0:
         q = str(abs(round(gears[Z2][2], 3)))
@@ -75,23 +73,4 @@ def Prog(mode, input_path=None, output_path=None):
 
 
 
-autocheck = False
-
-if autocheck:
-    for w in range(1, 14):
-        q = str(w)
-        if len(q) == 1:
-            q = "0" +q
-        print(q)
-        out = Prog(mode="file", input_path="C:/Users/user/Downloads/Шестренки/input_s1_"+q+".txt", output_path="output.txt")
-        f = open("C:/Users/user/Downloads/Шестренки/output_s1_" + q +".txt")
-        u = f.read()
-        if out != u:
-            print("ERROR")
-            print(u)
-            print("-----------")
-            print(out)
-
-else:
-    print(Prog(mode="file", input_path="C:/Users/user/Downloads/Шестренки/input_s1_08.txt", output_path="output.txt"))
-    # print(Goroda(mode='manual'))
+print(Prog(mode="file", input_path="C:/Users/User/Downloads/Шестренки/input_s1_08.txt", output_path="output.txt"))
