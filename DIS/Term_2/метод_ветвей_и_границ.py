@@ -70,11 +70,6 @@ def Priv(matrix):
 inf = float("inf")
 matrix = [ [ inf, 41, 17, 23, 32 ], [ 13, inf,  45, 12, 37 ], [ 80, 45, inf, 50, 64], [ 23, 12,50, inf, 67 ], [32, 37, 64, 67, inf ]]
 
-# matrix = [
-#     [inf, 10, 5],
-#     [10, inf, 20],
-#     [5, 20, inf]
-# ]
 old_matrix = [e[:] for e in matrix]
 
 def build_chain(ways):
