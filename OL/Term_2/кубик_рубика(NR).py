@@ -46,7 +46,7 @@ class Cube:
                     coords.append([N, j, i])
                 if self.left[i][j] == 1:
                     coords.append([0, N-j, i])
-        print(coords)
+        #print(coords)
         return coords[0]
     def rotate(self, axis, k, count):
         k = k-1
@@ -94,7 +94,8 @@ class Cube:
             self.right = new_right
             self.left = new_left
             self.backward = new_backward
-            self.set_elem(*self.locate_elem())
+            #self.set_elem(*self.locate_elem())
+
     def show(self):
         print(self.forward)
         print(self.backward)
@@ -131,9 +132,9 @@ def Work(mode, input_path=None, output_path=None):
     while N != 1:
         cube = Cube(N)
         cube.set_elem(XN-1, YN-1, ZN-1)
-        cube.show()
+        #cube.show()
         try:
-            print(cube.locate_elem())
+            #print(cube.locate_elem())
             for r in rotation:
                 if r[2] == -1:
                     cube.rotate(r[0], r[1], 3)
@@ -148,14 +149,16 @@ def Work(mode, input_path=None, output_path=None):
             XN -= 1
             YN -= 1
             ZN -= 1
-            for i in range(0, M):
-                if rotation[i][1] != 1:
-                    rotation[i][1] = rotation[i][1] - 1
-                else:
-                    rotation.pop(i)
+            try:
+                for i in range(0, len(rotation)):
+                    if rotation[i][1] != 1:
+                        rotation[i][1] = rotation[i][1] - 1
+                    else:
+                        rotation.pop(i)
+            except:
+                break
         if out_str == "":
             out_str = str(XN)+" "+str(YN)+" "+str(ZN)
-
 
 
     if mode == 'auto':
@@ -168,7 +171,7 @@ def Work(mode, input_path=None, output_path=None):
 
 
 
-autocheck = False
+autocheck = True
 
 if autocheck:
     for w in range(1, 21):
@@ -176,8 +179,8 @@ if autocheck:
         if len(q) == 1:
             q = "0" +q
         print(q)
-        out = Work(mode="file", input_path="C:/Users/user/Downloads/Кубик Рубика/input_s1_"+q+".txt", output_path="output.txt")
-        f = open("C:/Users/user/Downloads/Кубик Рубика/output_s1_" + q +".txt")
+        out = Work(mode="file", input_path="C:/Users/User/Downloads/Кубик Рубика/input_s1_"+q+".txt", output_path="output.txt")
+        f = open("C:/Users/User/Downloads/Кубик Рубика/output_s1_" + q +".txt")
         u = f.read()
         if out != u:
             print("ERROR")
@@ -186,5 +189,5 @@ if autocheck:
             print(out)
 
 else:
-    print(Work(mode="file", input_path="C:/Users/user/Downloads/Кубик Рубика/input_s1_11.txt", output_path="output.txt"))
+    print(Work(mode="file", input_path="C:/Users/User/Downloads/Кубик Рубика/input_s1_11.txt", output_path="output.txt"))
     # print(Goroda(mode='manual'))
