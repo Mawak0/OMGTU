@@ -1,3 +1,4 @@
+
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -15,8 +16,7 @@ class HelloWorld {
         str.Add(Console.ReadLine());
     }
 
-    List<string> del = (from e in str where str.IndexOf(e)%2 != 0 select e).ToList();
-    str = del;
+    str = (from e in str where str.IndexOf(e)%2 != 0 select e).ToList();
     sel = from e in str where e.Length % 2 == 0 select e;
     Console.WriteLine("--------------");
     foreach (string s in sel){
