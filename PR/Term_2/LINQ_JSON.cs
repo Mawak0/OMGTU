@@ -6,7 +6,7 @@ class MarkData{
     public string Name;
     public string Group;
     public string Discipline;
-    public int mark;
+    public int Mark;
 }
 
 class Task{
@@ -16,17 +16,10 @@ class Task{
 
 class ResponseDataType1{
     public string Cadet;
-    public int GPA;
-    public ResponseDataType1(string Cadet, int GPA){
+    public double GPA;
+    public ResponseDataType1(string Cadet, double GPA){
         this.Cadet = Cadet;
         this.GPA = GPA;
-    }
-}
-
-class ResponseDataType2{
-    public Dictionary<string, double> data;
-    public ResponseDataType2(Dictionary<string, double> data){
-        this.data = data;
     }
 }
 
@@ -37,10 +30,7 @@ class ResponseDataType3{
 }
 
 class ResponseData<T>{
-    public T[] Response;
-    public ResponseData(int len){
-        Response = new T[len];
-    }
+    public List<T> Response = new List<T>();
 }
 
 static void WriteResponse<ResponseType>(string path, ResponseData<ResponseType> Response){
@@ -62,14 +52,30 @@ static void DoTask(string input_path, string output_path){
     Task task = ReadTask(input_path);
     if (task.taskName == "GetStudentsWithHighestGPA"){
         var marks_by_student = from m_data in task.data group m_data by m_data.Name;
-        var students_GPA = from student_marks in marks_by_student select new {Name = student_marks.Key, GPA = (student_marks.Sum(x => (double)x.mark))/student_marks.Count()};
+        var students_GPA = from student_marks in marks_by_student select new {Name = student_marks.Key, GPA = (student_marks.Sum(x => (double)x.Mark))/student_marks.Count()};
         var max_GPA = students_GPA.Max(x => x.GPA);
         var students_with_max_GPA = from student_GPA in students_GPA where (student_GPA.GPA == max_GPA) select student_GPA;
+        ResponseData<ResponseDataType1> r1 = new ResponseData<ResponseDataType1>();
         foreach (var e in students_with_max_GPA){
-            Console.WriteLine(e);
+            r1.Response.Add(new ResponseDataType1(e.Name, e.GPA));
         }
+        WriteResponse<ResponseDataType1>(output_path, r1);
+    }
+    else if (task.taskName == "CalculateGPAByDiscipline"){
+        var marks_by_discipline = from m_data in task.data group m_data by m_data.Discipline;
+        var disciplines_GPA = from discipline in marks_by_discipline select new {Discipline=discipline.Key, GPA=(discipline.Sum(x => (double)x.Mark)/discipline.Count())};
+        ResponseData<Dictionary<string, double>> r2 = new ResponseData<Dictionary<string, double>>();
+        foreach (var discipline in disciplines_GPA){
+            r2.Response.Add(new Dictionary<string, double>() {{discipline.Discipline, discipline.GPA}});
+        }
+
+        WriteResponse<Dictionary<string, double>>(output_path, r2);
+    }
+    else if (task.taskName == "GetBestGroupsByDiscipline"){
+        
     }
 }
+
 
 
 DoTask("input1.json", "output1.json");
