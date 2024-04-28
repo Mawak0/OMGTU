@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 
-class Student{
+class MarkData{
     public string Name;
     public string Group;
     public string Discipline;
@@ -11,7 +11,7 @@ class Student{
 
 class Task{
     public string taskName;
-    public Student[] data;
+    public MarkData[] data;
 }
 
 class ResponseDataType1{
@@ -57,6 +57,24 @@ static Task ReadTask(string path){
     Task task = JsonConvert.DeserializeObject<Task>(json);
     return task;
 }
+
+static void DoTask(string input_path, string output_path){
+    Task task = ReadTask(input_path);
+    if (task.taskName == "GetStudentsWithHighestGPA"){
+        var marks_by_student = from m_data in task.data group m_data by m_data.Name;
+        var students_GPA = from student_marks in marks_by_student select new {Name = student_marks.Key, GPA = (student_marks.Sum(x => (double)x.mark))/student_marks.Count()};
+        var max_GPA = students_GPA.Max(x => x.GPA);
+        var students_with_max_GPA = from student_GPA in students_GPA where (student_GPA.GPA == max_GPA) select student_GPA;
+        foreach (var e in students_with_max_GPA){
+            Console.WriteLine(e);
+        }
+    }
+}
+
+
+DoTask("input1.json", "output1.json");
+
+
 
 
 
