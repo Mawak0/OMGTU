@@ -1,17 +1,16 @@
-
-autocheck = True
-
-if autocheck:
-    for w in range(1, 14):
-        q = str(w)
-        if len(q) == 1:
-            q = "0" +q
-        print(q)
-        out = Prog(mode="file", input_path="C:/Users/User/Downloads/Шестренки/input_s1_"+q+".txt", output_path="output.txt")
-        f = open("C:/Users/User/Downloads/Шестренки/output_s1_" + q +".txt")
-        u = f.read()
-        if out != u:
-            print("ERROR")
-            print(u)
-            print("-----------")
-            print(out)
+using System;
+class data{
+    public int Number_check;
+    public string FIO;
+    public string Number;
+    public double Income;
+    public double Expenses;
+    public double Tax;
+    
+    public data(int Number_check, string FIO, string Number, double Income, double Expenses, double ta)
+}
+class HelloWorld {
+  static void Main() {
+    Console.WriteLine("Hello World");
+  }
+}
