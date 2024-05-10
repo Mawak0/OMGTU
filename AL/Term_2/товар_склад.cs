@@ -48,6 +48,7 @@ class Program{
     var min_price = tov.Min(x => x.price);
     var min_price_tovar = (from t in tov where t.price == min_price select t).ToList();
     Console.WriteLine($"Самый дешевый товар со всех складов: {min_price_tovar[0].name} цена: {min_price}");
-    var summ_price = tov.Sum(x => x.price);
+    var summ_price = (from t in tov select t into tt select tt.price * tt.count).Sum(x => x);
+    Console.WriteLine($"Общая стоимость товаров со всех складов: {summ_price}");
   }
 }
