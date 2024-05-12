@@ -27,6 +27,11 @@ class ResponseDataType3{
     public string Discipline;
     public string Group;
     public double GPA;
+    public ResponseDataType3(string Discipline, string Group, double GPA){
+        this.Discipline = Discipline;
+        this.Group = Group;
+        this.GPA = GPA;
+    }
 }
 
 class ResponseData<T>{
@@ -72,35 +77,17 @@ static void DoTask(string input_path, string output_path){
         WriteResponse<Dictionary<string, double>>(output_path, r2);
     }
     else if (task.taskName == "GetBestGroupsByDiscipline"){
-        
+        var marks_by_discipline = from m_data in task.data group m_data by m_data.Discipline;
+        var result = from data in marks_by_discipline select new {Discipline=data.Key, Groups_marks= (from d in data group d by d.Group into dd select new {Group=dd.Key, Average_mark=dd.Average(x => x.Mark)}).OrderByDescending(x => x.Average_mark).ToList()[0]};
+        ResponseData<ResponseDataType3> r3 = new ResponseData<ResponseDataType3>();
+        foreach (var r_data in result){
+            r3.Response.Add(new ResponseDataType3(r_data.Discipline, r_data.Groups_marks.Group, r_data.Groups_marks.Average_mark));
+        }
+        WriteResponse<ResponseDataType3>(output_path, r3);
     }
 }
 
 
 
-DoTask("input1.json", "output1.json");
-
-
-
-
-
-
-
-
-
-//Task task = ReadTask("input1.json");
-//Console.WriteLine(task.data[0].Name);
-
-//ResponseData<ResponseDataType1> r1 = new ResponseData<ResponseDataType1>(1);
-//r1.Response[0] = new ResponseDataType1("User1", 5);
-//WriteResponse<ResponseDataType1>("output1.json", r1)
-
-ResponseData<Dictionary<string, int>> r2 = new ResponseData<Dictionary<string, int>>(2);
-Dictionary<string, int> d1 = new Dictionary<string, int>(1);
-d1.Add("Math", 5);
-r2.Response[0] = d1;
-Dictionary<string, int> d2 = new Dictionary<string, int>(1);
-d2.Add("SomeLesson", 3);
-r2.Response[1] = d2;
-WriteResponse<Dictionary<string, int>>("output1.json", r2)
+DoTask("input3.json", "output3.json");
 
