@@ -29,25 +29,33 @@ def FF():
         current_point = start
         way = [current_point]
         dead_points = []
+        min_flow = inf
         marks = [] #[point, flow, from]
         while current_point != finish:
             able = able_to_go(current_point, dead_points)
             if len(able) == 0:
                 if current_point == start:
-                    print("итс овер")
+                    total_flow = 0
+                    stok = able_to_reverse(finish)
+                    for s in stok:
+                        total_flow += s[1]
+                    return total_flow
                 else:
                     dead_points.append(current_point)
                     if len(able_to_go(way[-2], dead_points)) != 0:
                         way.pop(-1)
                         current_point = way[-1]
+                        able = able_to_go(current_point, dead_points)
                     else:
                         dead_points.remove(current_point)
                         able_rev = able_to_reverse(current_point)
                         backway = able_rev[0]
                         way.append(backway[0])
-                        flow = backway[1]
+                        flow = min([backway[1], marks[-1][1]])
                         weigth_matrix[backway[0]][current_point][0] = weigth_matrix[backway[0]][current_point][0] + flow
                         weigth_matrix[backway[0]][current_point][1] = weigth_matrix[backway[0]][current_point][1] - flow
+                        min_flow = flow
+                        current_point = backway[0]
                         #marks.append([backway[0], flow, current_point])
                         continue
 
@@ -56,7 +64,6 @@ def FF():
             marks.append([next_point, flow, current_point])
             way.append(next_point)
             current_point = next_point
-        min_flow = inf
         for m in marks:
             min_flow = min([min_flow, m[1]])
         old_w = way[0]
@@ -65,10 +72,6 @@ def FF():
             weigth_matrix[old_w][way[i]][1] = weigth_matrix[old_w][way[i]][1] + min_flow
             old_w = way[i]
 
-        Show_weigth_matrix(weigth_matrix)
-        #print(current_used_flow)
-        print(marks)
-        input()
 
 
 
@@ -104,8 +107,8 @@ for p in range(0, len(points ) +1):
 
 for e in edges:
     weigth_matrix[e[0]][e[1]] = [e[2], 0] #max/used
-Show_weigth_matrix(weigth_matrix)
+#Show_weigth_matrix(weigth_matrix)
 
 start = int(input("Введите точку истока: "))
 finish = int(input("Введите точку стока: "))
-FF()
+print("Результат алгоритма Форда-Фалкерсона: "+str(FF()))
