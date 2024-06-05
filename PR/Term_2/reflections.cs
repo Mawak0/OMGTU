@@ -1,22 +1,38 @@
 using System.Reflection;
+using System.Linq;
 string assemblyFile = "C:/Users/user/Downloads/core.dll";
 System.Reflection.Assembly assem = Assembly.LoadFrom(assemblyFile);
 Type[] types = assem.GetTypes();
-foreach (Type t in types){
-    Console.WriteLine("--------------------------------------");
-    if (t.IsClass){Console.WriteLine($"Класс: {t.FullName}");}
-    else if (t.IsInterface) {Console.WriteLine($"Интерфейс: {t.FullName}");}
-    if (t.BaseType == typeof(System.Attribute)){Console.WriteLine("Является атрибутом");}
-    if (t.IsInterface || t.IsClass){
-        System.Reflection.MethodInfo[] methods = t.GetMethods();
-        Console.WriteLine("Список публичных методов: ");
-        foreach (System.Reflection.MethodInfo m in methods){
-            System.Reflection.ParameterInfo[] parametres = m.GetParameters();
-            Console.WriteLine($"Имя: {m.Name}, тип возвращаемого значения: {m.ReturnType}");
-            Console.WriteLine("Формальные параметры: ");
-            foreach (System.Reflection.ParameterInfo p in parametres){
-                Console.WriteLine($"{p.ParameterType} {p.Name}");
-            }
+var interface_types = from t in types where t.IsInterface select new {name=t.FullName, attribute=(t.BaseType == typeof(System.Attribute)),  methods=from m in t.GetMethods() select new {m_name=m.Name, m_return=m.ReturnType, m_params=m.GetParameters()}};
+var class_types = from t in types where t.IsClass select new {name=t.FullName, attribute=(t.BaseType == typeof(System.Attribute)), methods=from m in t.GetMethods() select new {m_name=m.Name, m_return=m.ReturnType, m_params=m.GetParameters()}};
+
+Console.WriteLine("Интерфейсы: ");
+foreach (var i in interface_types){
+    Console.WriteLine("-------------------------------------");
+    Console.WriteLine($"Имя интерфейса: {i.name}");
+    if (i.attribute){Console.WriteLine("Является атрибутом");}
+    Console.WriteLine("Список публичных методов: ");
+    foreach (var m in i.methods){
+        Console.WriteLine($"Имя: {m.m_name}, тип возвращаемого значения: {m.m_return}");
+        Console.WriteLine("Формальные параметры: ");
+        foreach (var p in m.m_params){
+            Console.WriteLine($"{p.ParameterType} {p.Name}");
+        }
+    }
+}
+
+
+Console.WriteLine("Классы: ");
+foreach (var i in class_types){
+    Console.WriteLine("-------------------------------------");
+    Console.WriteLine($"Имя класса: {i.name}");
+    if (i.attribute){Console.WriteLine("Является атрибутом");}
+    Console.WriteLine("Список публичных методов: ");
+    foreach (var m in i.methods){
+        Console.WriteLine($"Имя: {m.m_name}, тип возвращаемого значения: {m.m_return}");
+        Console.WriteLine("Формальные параметры: ");
+        foreach (var p in m.m_params){
+            Console.WriteLine($"{p.ParameterType} {p.Name}");
         }
     }
 }
