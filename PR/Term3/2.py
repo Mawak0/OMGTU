@@ -19,3 +19,6 @@ print(ps)
 iq = scipy.integrate.quad(f, a = 2, b= 4)
 
 print("определенный интеграл от a до b = "+str(iq[0]))
+
+it = sympy.integrate((2*x**3)**(1/2), x)
+print("Неопределенный интеграл "+str(it))
