@@ -1,23 +1,26 @@
-#include <stdio.h> 
-#include <locale.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
-
-// exe <input.txt >output.txt
 
 int main()
 {
-    char* locale = setlocale(LC_ALL, "");
-    HANDLE standart_input_d;
-    standart_input_d = 0;
-    standart_output_d = 1;
+    int standart_input_d = 0;
+    int standart_output_d = 1;
     char b1[] = "Enter any text (5 bytes): ";
-    write(standart_output_d, b1, strlen((const char*)b1));
-    char b2[6];
-    DWORD bytes_read = 0;
-    ReadFile(standart_input_d, &b2, 5, &bytes_read, NULL);
-    b2[bytes_read] = '\0';
-    LPCVOID b3 = "This text was entered before: ";
-    WriteFile(standart_output_d, b3, strlen((const char*)b3), NULL, NULL);
-    WriteFile(standart_output_d, b2, strlen((const char*)b2), NULL, NULL);
-}
+    if (isatty(standart_input_d)){
+        write(standart_output_d, b1, strlen((const char*)b1));
+    }
+    if (isatty(standart_output_d) == 0){
+        int *outtty = open("/dev/tty", O_RDONLY);
+        write(outtty, b1, strlen((const char*)b1));
+    }
 
+    char b2[6];
+    read(standart_input_d, b2, 5);
+    b2[5] = '\0';
+    char b3[] = "This text was entered before: ";
+    write(standart_output_d, b3, strlen((const char*)b3));
+    write(standart_output_d, b2, strlen((const char*)b2));
+}
