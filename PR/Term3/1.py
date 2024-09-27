@@ -64,9 +64,9 @@ print()
 print(f'B in 14 = {np.linalg.matrix_power(B, 14)}')
 print()
 
-print("Variant_5")
-a = np.array([[3, -3.4, 4.2, 0], [2, 18, 0, -3], [2, -2.5, -17, 4], [4, -3.6, 15, -2]])
-b = np.array([-3, 5.9, 9, 1])
+print("Variant_4")
+a = np.array([[2.3, 0, -3.4, -12], [2.6, 8.4, -9, 3], [1.3, 4.5, -17, 2], [1.8, 0, 15, 16]])
+b = np.array([-14, 0.4, -3.6, 17.4])
 x = np.linalg.solve(a, b)
 
 print(f'Solve = {x}')
