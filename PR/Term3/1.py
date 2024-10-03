@@ -8,7 +8,10 @@ def show_matrix(mat):
     s = ""
     for line in mat:
         for e in line:
-            s = s+" "+str(int(e))
+            if (e-int(e) == 0):
+                s = s+" "+str(int(e))
+            else:
+                s = s + " " + str(e)
         s = s+"\n"
     print(s)
 
@@ -22,7 +25,8 @@ A[0] -= 5
 print(f'A after * and - = ')
 show_matrix(A)
 
-B = np.random.randint (0, 10, (6, 3))
+B = np.random.random_sample((6, 3))
+B = 10 * B
 print(f'B = ')
 show_matrix(B)
 
@@ -44,7 +48,7 @@ A = np.delete(A,2,1) #(матрица, номер строки/столбца с
 print(f'A (5х5) =')
 show_matrix(A)
 
-add_B = np.random.randint(10, 20, size=(6,3))
+add_B = np.random.randint(10, 21, size=(6,3))
 B = np.concatenate([B, add_B], axis=1)
 print(f'B (6х6) =')
 show_matrix(B)

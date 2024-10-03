@@ -13,6 +13,7 @@ print("Первая производная функции в точке: "+str(p
 p2= derivative(f, 2.0,n=2, dx=1e-6)
 
 print("Вторая производная функции в точке: "+str(p2))
+
 x = sympy.Symbol('x')
 ps = sympy.diff(2/sympy.sin(x)+4, x)
 print("Символьное представление производной:")
