@@ -20,9 +20,21 @@ print("Символьное представление производной:")
 print(ps)
 
 
-iq = scipy.integrate.quad(f, a = 3, b= 6)
+def rectangle_method(f, a, b, n):
+    width = (b - a) / n
+    result = 0
 
-print("определенный интеграл от a до b = "+str(iq[0]))
+    for i in range(n):
+        result += f(a + i * width) * width
+
+    return result
+
+
+
+a = 3
+b = 6
+n = 10000
+print("определенный интеграл от a до b = "+str(rectangle_method(f, a, b, n)))
 
 it = sympy.integrate(2/sympy.sin(x)+4, x)
 print("Неопределенный интеграл "+str(it))
