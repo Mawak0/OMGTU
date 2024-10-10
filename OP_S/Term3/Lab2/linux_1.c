@@ -13,7 +13,7 @@ int main()
     char b2[16];
     read(standart_input_d, b2, 15);
     b2[15] = '\0';
-    int file = open("test_file", "w");
+    int file = open("test_file", O_CREAT, O_WRONLY);
     printf("%d", file);
     int status = 1;
     status = write(file, b2, strlen((const char*)b2));
