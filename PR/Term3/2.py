@@ -62,7 +62,7 @@ bounds = [(0, None), (0, None)]
 
 x0 = [0.5, 0.5]
 
-solution = scipy.optimize.minimize(L, x0, method='SLSQP', bounds=bounds, constraints=cons)
+solution = scipy.optimize.minimize(L, x0, method='trust-constr', bounds=bounds, constraints=cons)
 
 print('Решение:', solution.x)
 print('Значение целевой функции:', solution.fun)
