@@ -24,7 +24,8 @@ show_matrix(L)
 print("Верхняя треугольная матрица:")
 show_matrix(U)
 
-#det_A = np.linalg.det(A)
+det_A = np.linalg.det(A)
+print("Определитель исходной матрицы: "+str(det_A))
 diag_el = np.prod(np.diag(L))*np.prod(np.diag(U))
 det_r_p = 1 / np.linalg.det(P)
 det_A = diag_el*det_r_p

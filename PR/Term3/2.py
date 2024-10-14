@@ -64,10 +64,6 @@ x0 = [0.5, 0.5]
 
 solution = scipy.optimize.minimize(L, x0, method='trust-constr', bounds=bounds, constraints=cons)
 
-print('Решение:', solution.x)
+print('Решение:', solution)
 print('Значение целевой функции:', solution.fun)
-
-
-
-
 
