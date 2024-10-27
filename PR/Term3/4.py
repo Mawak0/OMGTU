@@ -105,3 +105,70 @@ ax.set_ylabel("x2", fontsize=14)
 ax.set_zlabel("f(x1, x2)", fontsize=14)
 
 plt.show()
+
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+
+fig.suptitle("Сетка из 4 графиков", fontsize=16)
+
+axes[0, 0].plot(x, y, label="f(x)", color='blue')
+axes[0, 0].set_title("График функции 2/(sin(x)+4)", fontsize=16)
+axes[0, 0].set_xlabel("Значения X", fontsize=14)
+axes[0, 0].set_ylabel("Значения Y", fontsize=14)
+axes[0, 0].patch.set_facecolor('grey')
+
+axes[0, 1].scatter(x, y, marker='o', color=(0.8, 0.5, 0.8))
+axes[0, 1].set_title("Точечный график функции y = x^2", fontsize=16)
+axes[0, 1].set_xlabel("Значения X", fontsize=14)
+axes[0, 1].set_ylabel("Значения Y", fontsize=14)
+axes[0, 1].grid(True, color='gray', alpha=0.5)
+
+
+axes[1, 0].pie(counts, labels=unique_values, colors=colors)
+axes[1, 0].set_title('Круговая диаграмма распределения чисел')
+
+
+ax3d = fig.add_subplot(2, 2, 4, projection='3d')
+ax3d.plot_surface(X1, X2, Z, color='cyan', alpha=0.7)
+ax3d.set_title("График функции f(x1, x2) = (x1 - 4)^2 + (x2 - 2)^2", fontsize=16)
+ax3d.set_xlabel("x1", fontsize=14)
+ax3d.set_ylabel("x2", fontsize=14)
+ax3d.set_zlabel("f(x1, x2)", fontsize=14)
+axes[1, 1].set_axis_off()
+
+plt.tight_layout()
+plt.show()
+
+styles = ['dark_background', 'grayscale', 'Solarize_Light2']
+
+for style in styles:
+    plt.style.use(style)
+    fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+
+    fig.suptitle("Стиль "+style, fontsize=16)
+
+    axes[0, 0].plot(x, y, label="f(x)", color='blue')
+    axes[0, 0].set_title("График функции 2/(sin(x)+4)", fontsize=16)
+    axes[0, 0].set_xlabel("Значения X", fontsize=14)
+    axes[0, 0].set_ylabel("Значения Y", fontsize=14)
+    axes[0, 0].patch.set_facecolor('grey')
+
+    axes[0, 1].scatter(x, y, marker='o', color=(0.8, 0.5, 0.8))
+    axes[0, 1].set_title("Точечный график функции y = x^2", fontsize=16)
+    axes[0, 1].set_xlabel("Значения X", fontsize=14)
+    axes[0, 1].set_ylabel("Значения Y", fontsize=14)
+    axes[0, 1].grid(True, color='gray', alpha=0.5)
+
+    axes[1, 0].pie(counts, labels=unique_values, colors=colors)
+    axes[1, 0].set_title('Круговая диаграмма распределения чисел')
+
+    ax3d = fig.add_subplot(2, 2, 4, projection='3d')
+    ax3d.plot_surface(X1, X2, Z, color='cyan', alpha=0.7)
+    ax3d.set_title("График функции f(x1, x2) = (x1 - 4)^2 + (x2 - 2)^2", fontsize=16)
+    ax3d.set_xlabel("x1", fontsize=14)
+    ax3d.set_ylabel("x2", fontsize=14)
+    ax3d.set_zlabel("f(x1, x2)", fontsize=14)
+    axes[1, 1].set_axis_off()
+
+    plt.tight_layout()
+    plt.show()
