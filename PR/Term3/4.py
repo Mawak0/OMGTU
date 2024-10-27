@@ -2,7 +2,6 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 def f(x):
     return 2/(math.sin(x)+4)
 
@@ -72,7 +71,7 @@ colors = ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99']
 plt.figure(figsize=(10, 5))
 
 plt.subplot(1, 2, 1)
-plt.pie(counts, labels=unique_values, colors=colors, autopct='%1.1f%%', startangle=90)
+plt.pie(counts, labels=unique_values, colors=colors)
 plt.title('Круговая диаграмма распределения чисел')
 
 plt.subplot(1, 2, 2)
@@ -84,4 +83,25 @@ plt.ylabel('Количество')
 plt.xticks(unique_values)
 
 plt.tight_layout()
+plt.show()
+
+
+
+x1 = np.linspace(3, 6, 100)
+x2 = np.linspace(3, 6, 100)
+
+X1, X2 = np.meshgrid(x1, x2)
+
+Z = (X1 - 4) ** 2 + (X2 - 2) ** 2
+
+fig = plt.figure(figsize=(10, 10))
+ax = fig.add_subplot(111, projection='3d')
+
+ax.plot_surface(X1, X2, Z, color='cyan', alpha=0.7)
+
+ax.set_title("График функции f(x1, x2) = (x1 - 4)^2 + (x2 - 2)^2", fontsize=16)
+ax.set_xlabel("x1", fontsize=14)
+ax.set_ylabel("x2", fontsize=14)
+ax.set_zlabel("f(x1, x2)", fontsize=14)
+
 plt.show()
