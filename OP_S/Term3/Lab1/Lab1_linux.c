@@ -13,7 +13,7 @@ int main()
         write(standart_output_d, b1, strlen((const char*)b1));
     }
     if (isatty(standart_output_d) == 0){
-        int *outtty = open("/dev/tty", O_RDONLY);
+        int *outtty = open("/dev/tty", O_WRONLY);
         write(outtty, b1, strlen((const char*)b1));
     }
 
