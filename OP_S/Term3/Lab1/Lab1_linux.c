@@ -9,11 +9,11 @@ int main()
     int standart_input_d = 0;
     int standart_output_d = 1;
     char b1[] = "Enter any text (5 bytes): ";
-    if (isatty(standart_input_d)){
+    if (isatty(standart_output_d)){
         write(standart_output_d, b1, strlen((const char*)b1));
     }
     if (isatty(standart_output_d) == 0){
-        int *outtty = open("/dev/tty", O_RDONLY);
+        int *outtty = open("/dev/tty", O_WRONLY);
         write(outtty, b1, strlen((const char*)b1));
     }
 
