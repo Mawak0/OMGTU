@@ -27,8 +27,4 @@ int main()
     printf("\n");
     printf(b3);
     printf("\n");
-
-
-
-
 }
