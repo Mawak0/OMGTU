@@ -52,7 +52,7 @@ print("--------------------------------------------")
 #10
 filtered_df = df4[df4['name'].isin(df1["name"])]
 #print(filtered_df["cabin"])
-print(df4[df4['cabin'].isin(filtered_df["cabin"])]["name"])
+print(df4[df4['cabin'].isin(filtered_df["cabin"])]["cabin"])
 
 #11
 df4["BirthYear"] = 1912 - df4["age"]
