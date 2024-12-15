@@ -1,49 +1,18 @@
-using System;
+void print_centered(const char *message) {
+    // Получаем размеры консоли
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    int rows = w.ws_row;
+    int cols = w.ws_col;
 
-public class Vector
-{
-    private int[] elements;
+    // Вычисляем начальную позицию для центрирования
+    int message_length = strlen(message);
+    int start_row = rows / 2;
+    int start_col = (cols - message_length) / 2;
 
-    // Конструктор, принимающий размер вектора
-    public Vector(int size)
-    {
-        elements = new int[size];
-    }
+    // Выводим сообщение
+    printf("\033[%d;%dH%s\n", start_row, start_col, message);
 
-    // Конструктор, принимающий массив значений
-    public Vector(int[] values)
-    {
-        elements = new int[values.Length];
-        values.CopyTo(elements, 0);
-    }
-
-    // Индексатор для доступа к элементам вектора
-    public int this[int index]
-    {
-        get => elements[index];
-        set => elements[index] = value;
-    }
-
-    // Свойство для получения длины вектора
-    public int Length => elements.Length;
-
-    // Переопределение оператора сложения для векторов
-    public static Vector operator +(Vector v1, Vector v2)
-    {
-        if (v1.Length != v2.Length)
-            throw new ArgumentException("Vectors must be of the same length");
-
-        int[] result = new int[v1.Length];
-        for (int i = 0; i < v1.Length; i++)
-        {
-            result[i] = v1[i] + v2[i];
-        }
-        return new Vector(result);
-    }
-
-    // Метод для отображения вектора
-    public override string ToString()
-    {
-        return $"[{string.Join(", ", elements)}]";
-    }
+    // Возвращаем курсор в начало новой строки
+    printf("\033[%d;0H", rows + 1);
 }
