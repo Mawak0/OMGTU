@@ -46,7 +46,7 @@ plt.show()
 
 #Тепловая карта корреляций
 plt.figure(figsize=(50, 50))
-correlation_matrix = df.corr()
+correlation_matrix = df.corr(numeric_only=True)
 sns.heatmap(correlation_matrix, annot=True, fmt='.2f', cmap='coolwarm', linewidths=0.5)
 plt.title('Тепловая карта корреляций')
 plt.savefig('heatmap_correlations.png')
