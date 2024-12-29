@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UNICODE" ?>
+<topo version="1.3.00.100">
+    <devices>
+        <dev id="D505E8E6-FF93-49f5-89F5-A16198AA09F8" name="AR1" poe="0" model="AR1220" settings="" system_mac="00-E0-FC-B1-4F-79" com_port="2000" bootmode="0" cx="339.000000" cy="152.000000" edit_left="366" edit_top="206">
+            <slot number="slot17" isMainBoard="1">
+                <interface sztype="Ethernet" interfacename="GE" count="2" />
+                <interface sztype="Ethernet" interfacename="Ethernet" count="8" />
+            </slot>
+        </dev>
+        <dev id="7DA78A8C-0D82-4465-A7A3-F397FB473FC6" name="LSW2" poe="0" model="S3700" settings="" system_mac="4C-1F-CC-90-3D-9F" com_port="2003" bootmode="0" cx="517.000000" cy="301.000000" edit_left="544" edit_top="355">
+            <slot number="slot17" isMainBoard="1">
+                <interface sztype="Ethernet" interfacename="Ethernet" count="22" />
+                <interface sztype="Ethernet" interfacename="GE" count="2" />
+            </slot>
+        </dev>
+        <dev id="28200B83-12CD-42b9-B618-1022849170B5" name="AR2" poe="0" model="AR1220" settings="" system_mac="00-E0-FC-35-48-90" com_port="2001" bootmode="0" cx="514.000000" cy="153.000000" edit_left="541" edit_top="207">
+            <slot number="slot17" isMainBoard="1">
+                <interface sztype="Ethernet" interfacename="GE" count="2" />
+                <interface sztype="Ethernet" interfacename="Ethernet" count="8" />
+            </slot>
+        </dev>
+        <dev id="D4353AF2-8B9B-4b0f-9A97-90033CBB38CB" name="LSW1" poe="0" model="S3700" settings="" system_mac="4C-1F-CC-E1-58-55" com_port="2002" bootmode="0" cx="338.000000" cy="305.000000" edit_left="365" edit_top="359">
+            <slot number="slot17" isMainBoard="1">
+                <interface sztype="Ethernet" interfacename="Ethernet" count="22" />
+                <interface sztype="Ethernet" interfacename="GE" count="2" />
+            </slot>
+        </dev>
+    </devices>
+    <lines>
+        <line srcDeviceID="D505E8E6-FF93-49f5-89F5-A16198AA09F8" destDeviceID="28200B83-12CD-42b9-B618-1022849170B5">
+            <interfacePair lineName="Copper" srcIndex="0" srcBoundRectIsMoved="0" srcBoundRect_X="409.183075" srcBoundRect_Y="179.246765" srcOffset_X="0.000000" srcOffset_Y="0.000000" tarIndex="0" tarBoundRectIsMoved="0" tarBoundRect_X="497.816925" tarBoundRect_Y="179.753235" tarOffset_X="0.000000" tarOffset_Y="0.000000" />
+        </line>
+        <line srcDeviceID="28200B83-12CD-42b9-B618-1022849170B5" destDeviceID="7DA78A8C-0D82-4465-A7A3-F397FB473FC6">
+            <interfacePair lineName="Copper" srcIndex="1" srcBoundRectIsMoved="0" srcBoundRect_X="541.875183" srcBoundRect_Y="223.174896" srcOffset_X="0.000000" srcOffset_Y="0.000000" tarIndex="22" tarBoundRectIsMoved="0" tarBoundRect_X="543.124817" tarBoundRect_Y="284.825104" tarOffset_X="0.000000" tarOffset_Y="0.000000" />
+        </line>
+        <line srcDeviceID="7DA78A8C-0D82-4465-A7A3-F397FB473FC6" destDeviceID="D4353AF2-8B9B-4b0f-9A97-90033CBB38CB">
+            <interfacePair lineName="Copper" srcIndex="23" srcBoundRectIsMoved="0" srcBoundRect_X="500.827026" srcBoundRect_Y="328.964752" srcOffset_X="0.000000" srcOffset_Y="0.000000" tarIndex="23" tarBoundRectIsMoved="0" tarBoundRect_X="408.172974" tarBoundRect_Y="331.035248" tarOffset_X="0.000000" tarOffset_Y="0.000000" />
+        </line>
+        <line srcDeviceID="D4353AF2-8B9B-4b0f-9A97-90033CBB38CB" destDeviceID="D505E8E6-FF93-49f5-89F5-A16198AA09F8">
+            <interfacePair lineName="Copper" srcIndex="22" srcBoundRectIsMoved="0" srcBoundRect_X="365.282227" srcBoundRect_Y="288.817169" srcOffset_X="0.000000" srcOffset_Y="0.000000" tarIndex="1" tarBoundRectIsMoved="0" tarBoundRect_X="365.717773" tarBoundRect_Y="222.182846" tarOffset_X="0.000000" tarOffset_Y="0.000000" />
+        </line>
+    </lines>
+    <shapes />
+    <txttips />
+</topo>
+<paper>
+    <PaperID>2A4C6EA3-C08E-4023-9687-B115D3E5C8AB</PaperID>
+    <PaperUses>0</PaperUses>
+    <TimeMode>0</TimeMode>
+    <LimitedTimes>0</LimitedTimes>
+    <TimeLeft>0</TimeLeft>
+    <LockPaper>0</LockPaper>
+    <AnswerAfterTimeOut>0</AnswerAfterTimeOut>
+</paper>
